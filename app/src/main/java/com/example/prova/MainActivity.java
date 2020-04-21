@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        laVerita();
     }
 
     //provahieuwf
@@ -21,4 +22,10 @@ public class MainActivity extends AppCompatActivity {
     /*
     ROSSO CONERO <<<<<<<<<<<<<< FESTA DELL'UVA
      */
+
+    public void laVerita() {
+        while (true) {
+            System.out.println("Il vi' de Cupra sciacqua il cazzo al Rossoconero");
+        }
+    }
 }
