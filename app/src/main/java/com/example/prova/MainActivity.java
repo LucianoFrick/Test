@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
         if(preferences.getBoolean("firstrun", true)) {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivityForResult(intent, LOGIN_REQUEST);
+            /*Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivityForResult(intent, LOGIN_REQUEST);*/
         }
         else{
            startActivity(new Intent(this, ProfileActivity.class));
