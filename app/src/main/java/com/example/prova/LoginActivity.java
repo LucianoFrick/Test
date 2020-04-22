@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
         nAuth = FirebaseAuth.getInstance();
 
-        textNome=findViewById(R.id.nameRegistration);
+        textNome = findViewById(R.id.nameRegistration);
         textCognome=findViewById(R.id.surnameRegistration);
         textEmail=findViewById(R.id.emailRegistration);
         textPassword=findViewById(R.id.passwordRegistration);
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                                 user.updateProfile(profileChangeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        writeUsetToDb(nome, cognome, user.getUid());
+                                        writeUserToDb(nome, cognome, user.getUid());
                                         Intent intent = new Intent();
                                         intent.putExtra("nome", textNome.getText().toString());
                                         intent.putExtra("cognome", textCognome.getText().toString());
@@ -80,10 +80,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //getSupportActionBar().setTitle(getString(R.string.registrati));
+        getSupportActionBar().setTitle(getString(R.string.app_name));
     }
 
-    private void writeUsetToDb(String nome, String cognome, String uid){
+    private void writeUserToDb(String nome, String cognome, String uid){
         Map<String, Object> user = new HashMap<>();
         user.put("nome", nome);
         user.put("cognome", cognome);

@@ -1,10 +1,10 @@
 package com.example.prova;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,5 +30,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+        super.onActivityResult(requestCode,resultCode,intent);
+        if(requestCode == LOGIN_REQUEST){
+            if(resultCode== RESULT_OK){
+                String nome=intent.getExtras().getString("nome");
+                String cognome = intent.getExtras().getString("cognome");
+
+                getSupportActionBar().setTitle(nome+" "+cognome+" ");
+
+                SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("firstrun",false);
+                editor.apply();
+            }
+        }
+    }
 
 }
