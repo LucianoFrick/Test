@@ -16,4 +16,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="alreadySigned">Sei già registrato? Clicca qui</string>
+    <string name="signupText">Per favore effettuare il Log In</string>
+    <string name="Home">Restiamo a casa \n (tranne per fare la spesa)</string>
 </resources>

@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private TextInputEditText textNome, textCognome, textPassword, textEmail;
-    private Button btnRegistra;
+    private Button btnRegistra, btnAlready;
     private FirebaseAuth nAuth;
 
 
@@ -45,8 +45,8 @@ public class LoginActivity extends AppCompatActivity {
                 try{
                     final String nome = textNome.getText().toString();
                     final String cognome = textCognome.getText().toString();
-                    String email = textEmail.getText().toString();
-                    String password = textPassword.getText().toString();
+                    final String email = textEmail.getText().toString();
+                    final String password = textPassword.getText().toString();
 
                     nAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                                 user.updateProfile(profileChangeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        writeUserToDb(nome, cognome, user.getUid());
+                                        writeUserToDb(nome, cognome, email, password, user.getUid());
                                         Intent intent = new Intent();
                                         intent.putExtra("nome", textNome.getText().toString());
                                         intent.putExtra("cognome", textCognome.getText().toString());
@@ -80,13 +80,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        btnAlready = findViewById(R.id.btnAlready);
+        btnAlready.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         getSupportActionBar().setTitle(getString(R.string.app_name));
     }
 
-    private void writeUserToDb(String nome, String cognome, String uid){
+    private void writeUserToDb(String nome, String cognome, String email, String password, String uid){
         Map<String, Object> user = new HashMap<>();
         user.put("nome", nome);
         user.put("cognome", cognome);
+        user.put("email", email);
+        user.put("password", password);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("utenti").document(uid).set(user);

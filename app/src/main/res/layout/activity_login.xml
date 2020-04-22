@@ -94,7 +94,11 @@
         android:text="@string/registrationButton"
         android:textColor="@android:color/white" />
 
-
+    <Button
+        android:id="@+id/btnAlready"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alreadySigned" />
 
 
 </LinearLayout>
