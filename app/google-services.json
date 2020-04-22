@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "187469331307",
+    "firebase_url": "https://noqueue-847af.firebaseio.com",
+    "project_id": "noqueue-847af",
+    "storage_bucket": "noqueue-847af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187469331307:android:d27fc41ca489d8eb42aa2e",
+        "android_client_info": {
+          "package_name": "com.example.prova"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "187469331307-rgcivvq38ja4us6jffjhtsp3h41qi73p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWK1vhM6BKN1flO2PGRcTB-p7XR7xT41g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "187469331307-rgcivvq38ja4us6jffjhtsp3h41qi73p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

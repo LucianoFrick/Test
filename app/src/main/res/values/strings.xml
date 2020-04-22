@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Prova</string>
+    <string name="app_name">NoQueue</string>
+    <string name="registrationText">Per favore effettuare la registrazione</string>
+    <string name="welcomeText">Benvenuti su NoQueue</string>
+    <string name="registrationButton">Registrati</string>
+    <string name="textName">Nome</string>
+    <string name="textSurname">Cognome</string>
+    <string name="errorlogin">C\'è stato un problema con la registrazione</string>
+    <string name="inforequire">Inserisci tutti i campi</string>
 </resources>
