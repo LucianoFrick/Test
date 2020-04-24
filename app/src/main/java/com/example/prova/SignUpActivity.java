@@ -35,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try{
                 firebaseAuth.signInWithEmailAndPassword(emailSU.getText().toString(), passwordSU.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -53,7 +54,11 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
 
-            }
+            }catch(Exception e) {
+                    Toast.makeText(SignUpActivity.this, getString(R.string.inforequire), Toast.LENGTH_SHORT).show();
+                }
+
+                }
         });
 
 
