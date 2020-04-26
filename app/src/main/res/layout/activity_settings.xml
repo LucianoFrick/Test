@@ -6,6 +6,7 @@
     android:background="@android:color/white"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".SettingsActivity">
 
     <LinearLayout
@@ -27,13 +28,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
-            android:text="QUESTA è LA PGINA DOVE FAMO ROBE"
+            android:text=""
             android:textColor="@android:color/black"
             android:textSize="36sp"
             android:textStyle="bold" />
 
+
+
     </LinearLayout>
 
-
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Cambia Immagine" />
 
 </LinearLayout>
