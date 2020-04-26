@@ -19,4 +19,6 @@
     <string name="alreadySigned">Sei già registrato? Clicca qui</string>
     <string name="signupText">Per favore effettuare il Log In</string>
     <string name="Home">Restiamo a casa \n (tranne per fare la spesa)</string>
+    <string name="benvenuti">Benvenuti!</string>
+    <string name="selsorgente">Seleziona la sorgente</string>
 </resources>

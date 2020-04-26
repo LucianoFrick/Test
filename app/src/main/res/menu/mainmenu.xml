@@ -8,4 +8,11 @@
         android:icon="@drawable/ic_power_settings_new_black_24dp"
         app:showAsAction="ifRoom"
         />
+    <item android:title="Settings"
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        app:showAsAction="ifRoom"
+        android:onClick="goSettings"
+
+        />
 </menu>
