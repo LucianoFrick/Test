@@ -81,6 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
                     .into(propic);
         }
 
+        getSupportActionBar().setTitle(getString(R.string.benvenuti));
 
     }
 }

@@ -78,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-        getSupportActionBar().setTitle(getString(R.string.benvenuti));
+        getSupportActionBar().setTitle(getString(R.string.settings));
 
     }
 
