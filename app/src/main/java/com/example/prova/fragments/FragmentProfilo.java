@@ -1,6 +1,4 @@
-package com.example.prova;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.prova.fragments;
 
 import android.Manifest;
 import android.content.ComponentName;
@@ -12,12 +10,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
+import com.example.prova.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -26,8 +31,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingsActivity extends AppCompatActivity {
+import static android.app.Activity.RESULT_OK;
 
+
+public class FragmentProfilo extends Fragment {
     //per rendere il codice un po' piu generale e riutilizzarlo definiamo tre liste
     private ArrayList<String> permissionToRequest;
     private ArrayList<String> permissionRejected = new ArrayList<>();
@@ -37,19 +44,21 @@ public class SettingsActivity extends AppCompatActivity {
     private final static  int PICK_IMAGE = 200;
     private ImageView propic;
     public TextView textNome;
+    @Override
+    public void onCreate( Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profilo, container, false);
 
         FirebaseAuth nAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = nAuth.getCurrentUser();
-
-        propic=findViewById(R.id.proPic);
+        propic=view.findViewById(R.id.proPic);
         propic.setClipToOutline(true);
-        textNome=findViewById(R.id.proName);
+        textNome=view.findViewById(R.id.proName);
         textNome.setText(currentUser.getDisplayName());
 
         if (currentUser.getPhotoUrl() != null) {
@@ -59,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
                     .into(propic);
         } else {
             Glide.with(this)
-                    .load(getDrawable(R.drawable.placeholde))
+                    .load(getActivity().getDrawable(R.drawable.placeholde))
                     .centerCrop()
                     .into(propic);
         }
@@ -78,32 +87,8 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-        getSupportActionBar().setTitle(getString(R.string.settings));
 
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-
-        if(requestCode==PICK_IMAGE){
-            Bitmap bitmap = null;
-            if(resultCode == RESULT_OK){
-                if (getPickImageResultUri(intent) != null){ //abbiamo caricato la nostra immagine come bitmap
-                    Uri picUri = getPickImageResultUri(intent);
-                    try{
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),picUri);
-                    }catch(IOException e){
-                        e.printStackTrace();
-                    }
-                } else bitmap = (Bitmap) intent.getExtras().get("data");
-
-            }
-            Glide.with(this)
-                    .load(bitmap)
-                    .centerCrop()
-                    .into(propic);
-        }
+        return view;
     }
 
     private Uri getPickImageResultUri(Intent data){
@@ -119,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
         ArrayList<String> result = new ArrayList<>();
 
         for(String perm : wanted){
-            if(!(checkSelfPermission(perm) == PackageManager.PERMISSION_GRANTED)){
+            if(!(getActivity().checkSelfPermission(perm) == PackageManager.PERMISSION_GRANTED)){
                 result.add(perm); //per ogni perme necessario esso non è stato dato allora lo dobbiamo richiedere
             }
         }
@@ -130,7 +115,7 @@ public class SettingsActivity extends AppCompatActivity {
     public Intent getPickImageChooserIntent(){
         Uri outputFileUri = getCaptureImageOutputUrl();
         List<Intent> allIntents = new ArrayList<>();
-        PackageManager packageManager = getPackageManager();
+        PackageManager packageManager = getActivity().getPackageManager();
 
         Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         List <ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
@@ -170,23 +155,47 @@ public class SettingsActivity extends AppCompatActivity {
 
     public Uri getCaptureImageOutputUrl(){
         Uri outputFileUri = null;
-        File getImage = getExternalCacheDir();
+        File getImage =getActivity().getExternalCacheDir();
         if(getImage != null)
             outputFileUri = Uri.fromFile(new File(getImage.getPath(), "propic.png"));
         return outputFileUri;
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if(requestCode==PICK_IMAGE){
+            Bitmap bitmap = null;
+            if(resultCode == RESULT_OK){
+                if (getPickImageResultUri(intent) != null){ //abbiamo caricato la nostra immagine come bitmap
+                    Uri picUri = getPickImageResultUri(intent);
+                    try{
+                        bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),picUri);
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                } else bitmap = (Bitmap) intent.getExtras().get("data");
+
+            }
+            Glide.with(this)
+                    .load(bitmap)
+                    .centerCrop()
+                    .into(propic);
+        }
+    }
+
     public void onRequestPermissionToResult(int requestCode, String[] permission, int []grantResults) {
         if (requestCode == ALL_PERMISSION_RESULT) {
             for (String perms : permissionToRequest) {
-                if (!(checkSelfPermission(perms) == PackageManager.PERMISSION_GRANTED)) {
+                if (!(getActivity().checkSelfPermission(perms) == PackageManager.PERMISSION_GRANTED)) {
                     permissionRejected.add(perms);
                 }
             }
             if(permissionRejected.size() > 0){
                 if(shouldShowRequestPermissionRationale(permissionRejected.get(0))){
-                    Toast.makeText(this, "Approva tutto", Toast.LENGTH_LONG);
+                    Toast.makeText(getContext(), "Approva tutto", Toast.LENGTH_LONG);
                 }
             }
             else {
@@ -195,4 +204,3 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 }
-

@@ -1,6 +1,8 @@
 package com.example.prova;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.content.ComponentName;
@@ -22,6 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.prova.fragments.FragmentFeed;
+import com.example.prova.fragments.FragmentProfilo;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -33,6 +38,9 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
     private ImageView propic;
     public TextView textNome;
+    private BottomNavigationView bottomNav;
+    private FragmentProfilo fragmentProfilo;
+    private FragmentFeed fragmentFeed;
 
 
     @Override
@@ -52,36 +60,37 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    public void goSettings(MenuItem Item) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-        FirebaseAuth nAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = nAuth.getCurrentUser();
-
-        propic = findViewById(R.id.proPic);
-        propic.setClipToOutline(true);
-        textNome = findViewById(R.id.proName);
-        textNome.setText(currentUser.getDisplayName());
-        if (currentUser.getPhotoUrl() != null) {
-            Glide.with(this)
-                    .load(currentUser.getPhotoUrl())
-                    .centerCrop()
-                    .into(propic);
-        } else {
-            Glide.with(this)
-                    .load(getDrawable(R.drawable.placeholde))
-                    .centerCrop()
-                    .into(propic);
-        }
-
         getSupportActionBar().setTitle(getString(R.string.benvenuti));
+
+        fragmentFeed= new FragmentFeed();
+        fragmentProfilo= new FragmentProfilo();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmentFeed).commit();
+
+        bottomNav=findViewById(R.id.bottomnav);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment = null;
+                switch(item.getItemId()){
+                    case R.id.menu_feed:
+                        selectedFragment = fragmentFeed;
+                        break;
+                    case R.id.menu_profile:
+                        selectedFragment= fragmentProfilo;
+                        break;
+                }
+                if(selectedFragment != null){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+                }
+                return true;
+            }
+        });
+
+
 
     }
 }

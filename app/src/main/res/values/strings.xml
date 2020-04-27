@@ -22,4 +22,6 @@
     <string name="benvenuti">Benvenuti!</string>
     <string name="selsorgente">Seleziona la sorgente</string>
     <string name="settings">impostazioni</string>
+    <string name="feed">Feed</string>
+    <string name="profile">Profilo</string>
 </resources>
