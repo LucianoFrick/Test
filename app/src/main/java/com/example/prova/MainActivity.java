@@ -1,5 +1,6 @@
 package com.example.prova;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,60 +8,76 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    Button b1, b2;
-    public static final int LOGIN_REQUEST = 101;
-    private FirebaseAuth nAuth;
+    private Button btnSignup, btnRegister;
+    private EditText emailSU, passwordSU;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        b1=findViewById(R.id.home1);
-        b1.setOnClickListener(new View.OnClickListener() {
+        emailSU=findViewById(R.id.emailSignup);
+        passwordSU=findViewById(R.id.passwordSignup);
+        btnSignup=findViewById(R.id.btnSignup);
+        btnRegister=findViewById(R.id.btnRegister);
+        firebaseAuth =FirebaseAuth.getInstance();
+
+        btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-        });
-        b2=findViewById(R.id.home2);
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+                try{
+                    firebaseAuth.signInWithEmailAndPassword(emailSU.getText().toString(), passwordSU.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()){
+                                        SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putBoolean("firstrun",false);
+                                        editor.apply();
+                                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                                    }
+                                    else{
+                                        Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+
+                                }
+                            });
+
+                }catch(Exception e) {
+                    Toast.makeText(MainActivity.this, getString(R.string.inforequire), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
         if(preferences.getBoolean("firstrun", true)) {
-            /*Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivityForResult(intent, LOGIN_REQUEST);*/
         }
         else{
-           startActivity(new Intent(this, ProfileActivity.class));
+            startActivity(new Intent(this, ProfileActivity.class));
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
-        super.onActivityResult(requestCode,resultCode,intent);
-        if(requestCode == LOGIN_REQUEST){
-            if(resultCode== RESULT_OK){
-                String nome=intent.getExtras().getString("nome");
-                String cognome = intent.getExtras().getString("cognome");
 
-                getSupportActionBar().setTitle(nome+" "+cognome+" ");
 
-                SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean("firstrun",false);
-                editor.apply();
-            }
-        }
+
     }
-}

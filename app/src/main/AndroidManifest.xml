@@ -20,7 +20,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

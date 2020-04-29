@@ -1,6 +1,7 @@
 package com.example.prova;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -59,11 +60,13 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         writeUserToDb(nome, cognome, email, password, user.getUid());
-                                        Intent intent = new Intent();
-                                        intent.putExtra("nome", textNome.getText().toString());
-                                        intent.putExtra("cognome", textCognome.getText().toString());
-                                        setResult(RESULT_OK, intent);
+                                        SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putBoolean("firstrun",false);
+                                        editor.apply();
+                                        Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                                         finish();
+                                        startActivity(intent);
                                     }
                                 });
                             }
@@ -84,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         btnAlready.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 finish();
                 startActivity(intent);
             }
@@ -101,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
         user.put("password", password);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("utenti").document(uid).set(user);
+        db.collection("utentis").document(uid).set(user);
 
     }
 }
