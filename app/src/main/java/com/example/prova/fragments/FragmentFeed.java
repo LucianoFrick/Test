@@ -1,11 +1,14 @@
 package com.example.prova.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prova.AddActivity;
+import com.example.prova.LoginActivity;
 import com.example.prova.ProfileActivity;
 import com.example.prova.R;
 import com.example.prova.entities.Recensione;
@@ -51,20 +56,15 @@ public class FragmentFeed extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {}catch(Exception e){     Log.i("a","a");
-                }
+                startActivity(new Intent(getActivity(), AddActivity.class));
+
                     String titolo = randomString(15);
                     int voto = 5;
                     String testo = randomString(90);
 
                 Recensione recensione = new Recensione(titolo, voto, testo);
-
                 recensioni.add(recensione);
-
-                    feedAdapter.notifyDataSetChanged();//ogni volta che fai modifica nella struttura affinche il recyclerview sia aggiornato bisogna richiamareil notify, cosi sa cheè stato cambiato e aggiorna visualizzazione
-
-
-
+                    feedAdapter.notifyDataSetChanged();//ogni volta che fai modifica nella struttura affinche il recyclerview sia aggiornato bisogna richiamareil notify, cosi sa cheè stato cambiato e aggiorna visualizzazion
             }
         });
         return view;
@@ -81,4 +81,5 @@ public class FragmentFeed extends Fragment {
         }
         return builder.toString();
     }
+
 }

@@ -7,21 +7,18 @@
     <string name="textSurname">Cognome</string>
     <string name="errorlogin">C\'è stato un problema con la registrazione</string>
     <string name="inforequire">Inserisci tutti i campi</string>
-    <string name="title_activity_login2">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="alreadySigned">Sei già registrato? Clicca qui</string>
     <string name="signupText">Per favore effettuare il Log In</string>
-    <string name="Home">Restiamo a casa \n (tranne per fare la spesa)</string>
     <string name="benvenuti">Benvenuti!</string>
     <string name="selsorgente">Seleziona la sorgente</string>
-    <string name="settings">impostazioni</string>
     <string name="feed">Feed</string>
     <string name="profile">Profilo</string>
+    <string name="add">Aggiungi una nuova prenotazione</string>
+    <string name="city">Città:</string>
+    <string-array name="cities">
+        <item>Camerano</item>
+    </string-array>
+
 </resources>

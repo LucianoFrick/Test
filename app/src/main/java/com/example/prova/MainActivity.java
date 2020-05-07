@@ -51,14 +51,12 @@ public class MainActivity extends AppCompatActivity {
                                     else{
                                         Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                     }
-
                                 }
                             });
 
                 }catch(Exception e) {
                     Toast.makeText(MainActivity.this, getString(R.string.inforequire), Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -76,8 +74,4 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, ProfileActivity.class));
         }
     }
-
-
-
-
-    }
+}
