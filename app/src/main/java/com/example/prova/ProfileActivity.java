@@ -1,46 +1,29 @@
 package com.example.prova;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.Manifest;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.MediaStore;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.example.prova.fragments.FragmentFeed;
+import com.example.prova.fragments.FragmentPrenotazioni;
 import com.example.prova.fragments.FragmentProfilo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     private ImageView propic;
     public TextView textNome;
     private BottomNavigationView bottomNav;
     private FragmentProfilo fragmentProfilo;
-    private FragmentFeed fragmentFeed;
+    private FragmentPrenotazioni fragmentPrenotazioni;
 
 
     @Override
@@ -66,9 +49,9 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         getSupportActionBar().setTitle(getString(R.string.benvenuti));
 
-        fragmentFeed= new FragmentFeed();
+        fragmentPrenotazioni = new FragmentPrenotazioni();
         fragmentProfilo= new FragmentProfilo();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmentFeed).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmentPrenotazioni).commit();
 
         bottomNav=findViewById(R.id.bottomnav);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,8 +59,8 @@ public class ProfileActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
                 switch(item.getItemId()){
-                    case R.id.menu_feed:
-                        selectedFragment = fragmentFeed;
+                    case R.id.menu_prenotazioni:
+                        selectedFragment = fragmentPrenotazioni;
                         break;
                     case R.id.menu_profile:
                         selectedFragment= fragmentProfilo;

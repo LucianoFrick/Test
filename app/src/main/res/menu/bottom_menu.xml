@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_feed"
-        android:title="@string/feed"
+        android:id="@+id/menu_prenotazioni"
+        android:title="@string/prenotazioni"
         android:icon="@drawable/ic_book_black_24dp"
         android:checked="true"/>
 

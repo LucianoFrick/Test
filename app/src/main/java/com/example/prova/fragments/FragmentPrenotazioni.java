@@ -2,14 +2,10 @@ package com.example.prova.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prova.AddActivity;
-import com.example.prova.LoginActivity;
-import com.example.prova.ProfileActivity;
 import com.example.prova.R;
 import com.example.prova.entities.Recensione;
 import com.example.prova.uiutilities.FeedAdapter;
@@ -27,9 +21,7 @@ import com.example.prova.uiutilities.FeedAdapter;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static java.lang.Math.round;
-
-public class FragmentFeed extends Fragment {
+public class FragmentPrenotazioni extends Fragment {
 
     private RecyclerView recyclerView;
     private FeedAdapter feedAdapter;
@@ -45,9 +37,9 @@ public class FragmentFeed extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_feed, container, false);
+        View view =inflater.inflate(R.layout.fragment_prenotazioni, container, false);
 
-        recyclerView=view.findViewById(R.id.rv_feed);
+        recyclerView=view.findViewById(R.id.rv_prenotazioni);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         feedAdapter = new FeedAdapter(recensioni);
         recyclerView.setAdapter(feedAdapter);

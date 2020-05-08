@@ -13,12 +13,13 @@
     <string name="signupText">Per favore effettuare il Log In</string>
     <string name="benvenuti">Benvenuti!</string>
     <string name="selsorgente">Seleziona la sorgente</string>
-    <string name="feed">Feed</string>
+    <string name="prenotazioni">Prenotazioni</string>
     <string name="profile">Profilo</string>
     <string name="add">Aggiungi una nuova prenotazione</string>
     <string name="city">Città:</string>
     <string-array name="cities">
         <item>Camerano</item>
+        <item>CupraMontana regna</item>
     </string-array>
 
 </resources>
