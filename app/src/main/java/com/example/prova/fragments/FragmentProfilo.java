@@ -209,8 +209,6 @@ public class FragmentProfilo extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressBar.setVisibility(View.GONE);
-
-
                             profileImageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -233,10 +231,7 @@ public class FragmentProfilo extends Fragment {
                             Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
-
-
         }
-
     }
 
 
@@ -252,7 +247,6 @@ public class FragmentProfilo extends Fragment {
 
     private ArrayList findUnaskedPermissions(ArrayList<String> wanted){ //troviamo quali permessi non abbiamo chiesto
         ArrayList<String> result = new ArrayList<>();
-
         for(String perm : wanted){
             if(!(getActivity().checkSelfPermission(perm) == PackageManager.PERMISSION_GRANTED)){
                 result.add(perm); //per ogni permesso necessario non è stato dato allora lo dobbiamo richiedere
@@ -263,7 +257,6 @@ public class FragmentProfilo extends Fragment {
 
     //funzione per far scegliere all'utente l'intent da dove vuole prendere la foto
     public Intent getPickImageChooserIntent(){
-
         Uri outputFileUri = getCaptureImageOutputUrl();
         List<Intent> allIntents = new ArrayList<>();
         PackageManager packageManager = getActivity().getPackageManager();
@@ -301,9 +294,7 @@ public class FragmentProfilo extends Fragment {
         }
         allIntents.remove(mainIntent);
 
-
         Intent chooserIntent = Intent.createChooser(mainIntent, getString(R.string.selsorgente));
-
         //ora gli aggiungiamo tutti gli altri intent, abbiamo preso il principale che abbiamo scelto (se esiste è l'intent dei documenti altrimenti è l'ultimo) ci creiamo
         // un intent da questo e andiamo ad inserire tutti gli altri intent dopo abbiamo tolto tutti gli altri intent dalla lista degli intent
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
@@ -317,21 +308,17 @@ public class FragmentProfilo extends Fragment {
         if(getImage != null)
             outputFileUri = Uri.fromFile(new File(getImage.getPath(),  currentUser.getUid() + "propic.png"));
         return outputFileUri;
-
     }
 
 
     //metodo chiamato quando l'utente ha finito di dare i permessi
     public void onRequestPermissionToResult(int requestCode, String[] permission, int []grantResults) {
-
         if (requestCode == ALL_PERMISSION_RESULT) {
-
             for (Object perms : permissionToRequest) {
                 if (!(Objects.requireNonNull(getActivity()).checkSelfPermission((String) perms) == PackageManager.PERMISSION_GRANTED)) {
                     permissionRejected.add((String) perms);
                 }
             }
-
             if(permissionRejected.size() > 0){
 
                 if(shouldShowRequestPermissionRationale(permissionRejected.get(0))){
@@ -342,30 +329,4 @@ public class FragmentProfilo extends Fragment {
             }
         }
     }
-
-    /*public void downloadImage() throws IOException {
-
-        final File localFile = File.createTempFile(currentUser.getUid() + "propic", "png");
-        storageRef.getFile(localFile);
-
-        Bitmap bmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-        propic.setImageBitmap(bmap);
-
-
-    }
-
-    public void uploadImage(){
-
-        propic.setDrawingCacheEnabled (true);
-        propic.measure (View.MeasureSpec.makeMeasureSpec (0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec (0, View.MeasureSpec.UNSPECIFIED));
-        propic.layout (0, 0, propic.getMeasuredWidth (), propic.getMeasuredHeight ());
-        propic.buildDrawingCache ();
-        Bitmap bitmap = Bitmap.createBitmap (propic.getDrawingCache ()); ByteArrayOutputStream outputStream = new ByteArrayOutputStream ();
-        bitmap.compress (Bitmap.CompressFormat.JPEG, 100, outputStream); byte [] data = outputStream.toByteArray ();
-
-        UploadTask uploadTask = storageRef.putBytes (data);
-
-
-    }*/
-
 }

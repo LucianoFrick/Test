@@ -17,9 +17,41 @@
     <string name="profile">Profilo</string>
     <string name="add">Aggiungi una nuova prenotazione</string>
     <string name="city">Città:</string>
+    <string name="market">Negozio:</string>
+    <string name="orario">Orario di arrivo:</string>
+    <string name="durata">Durata:</string>
+
     <string-array name="cities">
         <item>Camerano</item>
-        <item>CupraMontana regna</item>
+        <item>CupraMontana</item>
     </string-array>
+
+    <string-array name="marketCamerano">
+        <item>Si con te - Via Fazioli</item>
+        <item>Si con te - Via Loretana</item>
+        <item>Supermercato Coal - San Germano</item>
+        <item>Ipermercato Carrefour</item>
+    </string-array>
+
+    <string-array name="marketCupra">
+        <item>Si con te - Cavalletti Michele</item>
+        <item>Supermercato Coal - Via C. Battisti</item>
+        <item>Alimentari Mauro</item>
+    </string-array>
+
+    <string-array name="durata">
+        <item>Breve (max 15min)</item>
+        <item>Media (15–30min)</item>
+        <item>Lunga (30+ min)</item>
+    </string-array>
+
+    <string-array name="hours">
+        <item>8</item><item>9</item><item>11</item><item>12</item><item>13</item><item>14</item><item>15</item><item>16</item><item>17</item><item>18</item><item>19</item><item>20</item>
+    </string-array>
+
+    <string-array name="minutes">
+        <item>00</item><item>10</item><item>20</item><item>30</item><item>40</item><item>50</item>
+    </string-array>
+
 
 </resources>
