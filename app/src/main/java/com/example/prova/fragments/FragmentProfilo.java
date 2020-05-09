@@ -11,20 +11,31 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.prova.ProfileActivity;
 import com.example.prova.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,55 +60,185 @@ public class FragmentProfilo extends Fragment {
     private final static  int PICK_IMAGE = 200;
 
     private ImageView propic;
-    public TextView textNome;
+    private EditText textNome;
+    private Uri uriProfileImage;
+    private ProgressBar progressBar;
+    private String profileImageUrl;
+    private Button save;
 
     FirebaseAuth nAuth = FirebaseAuth.getInstance();
     final FirebaseUser currentUser = nAuth.getCurrentUser();
 
-    FirebaseStorage storage = FirebaseStorage.getInstance ();
-    StorageReference storageRef = storage.getReferenceFromUrl ("gs://noqueue-847af.appspot.com/images") .child (currentUser.getUid() + "propic.png");
+    private FirebaseStorage storage = FirebaseStorage.getInstance ();
 
     @Override
     public void onCreate( Bundle savedInstanceState) { super.onCreate(savedInstanceState);
+
+
     }
+
+
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profilo, container, false);
 
+        progressBar= view.findViewById(R.id.progressbar);
         propic=view.findViewById(R.id.proPic);
         propic.setClipToOutline(true);
         textNome=view.findViewById(R.id.proName);
         textNome.setText(currentUser.getDisplayName());
+        save=view.findViewById(R.id.save);
+        loadUserInformation();
 
-        if (currentUser.getPhotoUrl() != null) {
-            Glide.with(this).load(currentUser.getPhotoUrl()).centerCrop().into(propic);
-        } else {
-            Glide.with(this)
-                    .load(getActivity().getDrawable(R.drawable.placeholde))
-                    .centerCrop()
-                    .into(propic);
-        }
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveUserInformation();
+            }
+        });
 
         propic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 permissions.add(Manifest.permission.CAMERA);
                 permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-
                 permissionToRequest=findUnaskedPermissions(permissions);
                 if(permissionToRequest.size() > 0){ //va a richiedere i permessi
                     requestPermissions((String[]) permissionToRequest.toArray(new String[permissionToRequest.size()]), ALL_PERMISSION_RESULT);
                 }else{
-                    startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
+                    //startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
+                    showImageChooser();
                 }
             }
         });
-
         return view;
     }
+
+    private void loadUserInformation() {
+        FirebaseUser user = nAuth.getCurrentUser();
+        if (user != null) {
+            if (user.getPhotoUrl() != null) {
+                Glide.with(this)
+                        .load(user.getPhotoUrl().toString())
+                        .centerCrop()
+                        .into(propic);
+            }else {
+                Glide.with(this)
+                        .load(getActivity().getDrawable(R.drawable.placeholde))
+                        .centerCrop()
+                        .into(propic);
+            }
+            if (user.getDisplayName() != null) {
+                textNome.setText(user.getDisplayName());
+            }
+        }
+    }
+    private void showImageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Profile Image"), PICK_IMAGE);
+    }
+
+    private void saveUserInformation() {
+        String displayName = textNome.getText().toString();
+
+        if(displayName.isEmpty()){
+            textNome.setError("Name required");
+            textNome.requestFocus();
+            return;
+        }
+        FirebaseUser user = nAuth.getCurrentUser();
+
+        if (user != null && profileImageUrl!= null) {
+            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(displayName)
+                    .setPhotoUri(Uri.parse(profileImageUrl))
+                    .build();
+            currentUser.updateProfile(profile)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Image Updated", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if(requestCode==PICK_IMAGE &&  intent.getData() != null){
+            Bitmap bitmap = null;
+            if(resultCode == RESULT_OK){
+               if (getPickImageResultUri(intent) != null){ //abbiamo caricato la nostra immagine come bitmap
+                    uriProfileImage=intent.getData();
+                    //uriProfileImage = getPickImageResultUri(intent);
+                    try{
+                        bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getContentResolver(),uriProfileImage);
+
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                } else bitmap = (Bitmap) intent.getExtras().get("data");
+
+                Glide.with(this)
+                        .load(bitmap)
+                        .centerCrop()
+                        .into(propic);
+                uploadImageToFirebaseStorage();
+            }
+        }
+        else{
+            Log.e("a","a");
+        }
+    }
+
+
+    private void uploadImageToFirebaseStorage() {
+        final StorageReference profileImageReference =
+                FirebaseStorage.getInstance().getReference("profilepics/"+System.currentTimeMillis()+".jpg");
+        if (uriProfileImage != null){
+            progressBar.setVisibility(View.VISIBLE); //faccio compare la rogressbar
+            profileImageReference.putFile(uriProfileImage)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressBar.setVisibility(View.GONE);
+
+
+                            profileImageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    profileImageUrl = uri.toString();
+                                    Toast.makeText(getActivity().getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+
+        }
+
+    }
+
 
     //solo se ho usato la fotocamera
     private Uri getPickImageResultUri(Intent data){
@@ -179,37 +320,6 @@ public class FragmentProfilo extends Fragment {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-
-        if(requestCode==PICK_IMAGE){
-
-            Bitmap bitmap = null;
-            if(resultCode == RESULT_OK){
-
-                if (getPickImageResultUri(intent) != null){ //abbiamo caricato la nostra immagine come bitmap
-
-                    Uri picUri = getPickImageResultUri(intent);
-
-                    try{
-                        bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),picUri);
-                        uploadImage();
-                    }catch(IOException e){
-                        e.printStackTrace();
-                    }
-                } else bitmap = (Bitmap) intent.getExtras().get("data");
-
-            }
-
-            Glide.with(this)
-                    .load(bitmap)
-                    .centerCrop()
-                    .into(propic);
-
-
-                }
-            }
 
     //metodo chiamato quando l'utente ha finito di dare i permessi
     public void onRequestPermissionToResult(int requestCode, String[] permission, int []grantResults) {
@@ -228,12 +338,12 @@ public class FragmentProfilo extends Fragment {
                     Toast.makeText(getContext(), "Dovresti Approvare tutto", Toast.LENGTH_LONG).show();
                 }
             } else {
-                startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
+             //   startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
             }
         }
     }
 
-    public void downloadImage() throws IOException {
+    /*public void downloadImage() throws IOException {
 
         final File localFile = File.createTempFile(currentUser.getUid() + "propic", "png");
         storageRef.getFile(localFile);
@@ -256,6 +366,6 @@ public class FragmentProfilo extends Fragment {
         UploadTask uploadTask = storageRef.putBytes (data);
 
 
-    }
+    }*/
 
 }
