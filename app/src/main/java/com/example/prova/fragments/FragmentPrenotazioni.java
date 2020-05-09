@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prova.AddActivity;
 import com.example.prova.R;
-import com.example.prova.entities.Recensione;
+import com.example.prova.entities.Prenotazione;
 import com.example.prova.uiutilities.FeedAdapter;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class FragmentPrenotazioni extends Fragment {
 
     private RecyclerView recyclerView;
     private FeedAdapter feedAdapter;
-    private ArrayList<Recensione> recensioni;
+    private ArrayList<Prenotazione> recensioni;
     private ImageButton btnAdd;
 
     @Override
@@ -54,8 +54,8 @@ public class FragmentPrenotazioni extends Fragment {
                     int voto = 5;
                     String testo = randomString(90);
 
-                Recensione recensione = new Recensione(titolo, voto, testo);
-                recensioni.add(recensione);
+                Prenotazione prenotazione = new Prenotazione(titolo, voto, testo);
+                recensioni.add(prenotazione);
                     feedAdapter.notifyDataSetChanged();//ogni volta che fai modifica nella struttura affinche il recyclerview sia aggiornato bisogna richiamareil notify, cosi sa cheè stato cambiato e aggiorna visualizzazion
             }
         });

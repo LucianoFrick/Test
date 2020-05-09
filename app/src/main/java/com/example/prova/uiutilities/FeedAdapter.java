@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prova.R;
-import com.example.prova.entities.Recensione;
+import com.example.prova.entities.Prenotazione;
 
 import java.util.ArrayList;
 
@@ -26,9 +26,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CViewHolder>{
         }
     }
 
-    private ArrayList<Recensione> struttura;
+    private ArrayList<Prenotazione> struttura;
 
-    public FeedAdapter(ArrayList<Recensione> struttura){
+    public FeedAdapter(ArrayList<Prenotazione> struttura){
         this.struttura=struttura;
     }
 

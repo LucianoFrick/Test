@@ -1,11 +1,11 @@
 package com.example.prova.entities;
 
-public class Recensione {
+public class Prenotazione {
     private String titolo;
     private int voto;
     private String testo;
 
-    public Recensione(String titolo, int voto, String testo){
+    public Prenotazione(String titolo, int voto, String testo){
         this.titolo=titolo;
         this.voto=voto;
         this.testo=testo;

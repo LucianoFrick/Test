@@ -17,7 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnSignup, btnRegister;
+    private Button btnLogin, btnRegister;
     private EditText emailSU, passwordSU;
     FirebaseAuth firebaseAuth;
 
@@ -26,13 +26,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        emailSU=findViewById(R.id.emailSignup);
-        passwordSU=findViewById(R.id.passwordSignup);
-        btnSignup=findViewById(R.id.btnSignup);
+        emailSU=findViewById(R.id.emailLogin);
+        passwordSU=findViewById(R.id.passwordLogin);
+        btnLogin=findViewById(R.id.btnLogin);
         btnRegister=findViewById(R.id.btnRegister);
         firebaseAuth =FirebaseAuth.getInstance();
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
-                                        SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+                                        SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE); //
                                         SharedPreferences.Editor editor = preferences.edit();
                                         editor.putBoolean("firstrun",false);
                                         editor.apply();
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+
         if(preferences.getBoolean("firstrun", true)) {
         }
         else{
