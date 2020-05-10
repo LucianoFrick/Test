@@ -96,7 +96,7 @@ public class AddActivity extends AppCompatActivity {
             }
 
             CollectionReference notebookRef = FirebaseFirestore.getInstance()
-                    .collection(currentUser+"Notebook");
+                    .collection(currentUser.getEmail()+"_Notebook");
             notebookRef.add(new Prenotazione(citta, negozio, ora, minuti, durata));
             Toast.makeText(this, "Note added", Toast.LENGTH_SHORT);
             finish();

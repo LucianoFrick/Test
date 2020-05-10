@@ -37,47 +37,26 @@ public class FragmentPrenotazioni extends Fragment {
     private ImageButton btnAdd;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference notebookRef = db.collection(currentUser+"Notebook");
+    private CollectionReference notebookRef = db.collection(currentUser.getEmail()+"_Notebook");
 
     private FireAdapter adapter;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recensioni=new ArrayList<>();
+        setUpRecyclerView();
     }
 
-    private void setUpRecyclerView() {
-        Query query = notebookRef.orderBy("ora",Query.Direction.DESCENDING);
-        FirestoreRecyclerOptions<Prenotazione> options =
-                new FirestoreRecyclerOptions.Builder<Prenotazione>()
-                .setQuery(query, Prenotazione.class).build();
-        adapter=new FireAdapter(options);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
-
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, // lo zero significa che non fa nulla con il drag and drop, ma solo con swipe left e right
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.deleteItem(viewHolder.getAdapterPosition());
-            }
-        }).attachToRecyclerView(recyclerView);
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_prenotazioni, container, false);
         recyclerView=view.findViewById(R.id.rv_prenotazioni);
-        setUpRecyclerView();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
 
         btnAdd=view.findViewById(R.id.button_add);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +68,26 @@ public class FragmentPrenotazioni extends Fragment {
         });
         return view;
     }
+    private void setUpRecyclerView() {
+        Query query = notebookRef.orderBy("ora",Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Prenotazione> options =
+                new FirestoreRecyclerOptions.Builder<Prenotazione>()
+                        .setQuery(query, Prenotazione.class).build();
+        adapter=new FireAdapter(options);
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, // lo zero significa che non fa nulla con il drag and drop, ma solo con swipe left e right
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.deleteItem(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(recyclerView);
+    }
+
 
     @Override
     public void onStart() {
