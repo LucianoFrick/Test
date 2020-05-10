@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="bottom"
-    tools:context=".ProfileActivity">
+    tools:context=".activities.ProfileActivity">
 
     <FrameLayout
         android:layout_width="match_parent"

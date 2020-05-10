@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".AddActivity">
+    tools:context=".activities.AddActivity">
 
     <TextView
         android:id="@+id/text_add"
@@ -140,6 +140,15 @@
         app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
         app:layout_constraintStart_toStartOf="@+id/linearLayout5"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+    <Button
+        android:id="@+id/btnMaps"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:text="APRI MAPS"
+        app:layout_constraintEnd_toEndOf="@+id/btnPrenota"
+        app:layout_constraintStart_toStartOf="@+id/btnPrenota"
+        app:layout_constraintTop_toBottomOf="@+id/btnPrenota" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.prova.AddActivity;
+import com.example.prova.activities.AddActivity;
 import com.example.prova.R;
 import com.example.prova.entities.Prenotazione;
 import com.example.prova.uiutilities.FireAdapter;

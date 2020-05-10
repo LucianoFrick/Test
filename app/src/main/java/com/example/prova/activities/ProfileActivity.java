@@ -1,4 +1,4 @@
-package com.example.prova;
+package com.example.prova.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.prova.R;
 import com.example.prova.fragments.FragmentPrenotazioni;
 import com.example.prova.fragments.FragmentProfilo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

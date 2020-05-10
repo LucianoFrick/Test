@@ -1,10 +1,7 @@
-package com.example.prova;
+package com.example.prova.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,8 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.prova.R;
 import com.example.prova.entities.Prenotazione;
-import com.example.prova.fragments.FragmentProfilo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -23,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddActivity extends AppCompatActivity {
     private Button btnPrenota;
+    private Button btnMaps;
     FirebaseAuth nAuth = FirebaseAuth.getInstance();
     final FirebaseUser currentUser = nAuth.getCurrentUser();
 
@@ -64,9 +62,13 @@ public class AddActivity extends AppCompatActivity {
                switch(cityValue){
                    case "Camerano":
                        marketSpinner.setAdapter(adapter2);
+                       double latit=43.00;
+                       double longit =13.00;
                        break;
                    case "CupraMontana":
                        marketSpinner.setAdapter(adapter3);
+                       double latit2=43.4497;
+                       double longit2 =13.1131;
                        break;
                }
            }
@@ -80,6 +82,37 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveNote(citySpinner, marketSpinner, hourSpinner, minuteSpinner, durationSpinner);
+            }
+        });
+
+        //PROVANDO A COLLEGARE CON INTENT LA ACTIVITY CON MAPS
+        btnMaps = findViewById(R.id.btnMaps);
+        btnMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddActivity.this, MapsActivity.class);
+
+                String cityValue = citySpinner.getSelectedItem().toString();
+                switch(cityValue){
+                    case "Camerano":
+                        double latit=43.00;
+                        double longit =13.00;
+
+                        intent.putExtra("latit", latit);
+                        intent.putExtra("longit", longit);
+
+                        break;
+
+                    case "CupraMontana":
+                        double latit2=43.4497;
+                        double longit2 =13.1131;
+
+                        intent.putExtra("latit", latit2);
+                        intent.putExtra("longit", longit2);
+                        break;
+                }
+                        finish();
+                        startActivity(intent);
             }
         });
     }
