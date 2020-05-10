@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         if(preferences.getBoolean("firstrun", true)) {
         }
         else{
+            finish();//cosi la main si chiude e non ci si torna
             startActivity(new Intent(this, ProfileActivity.class));
         }
     }

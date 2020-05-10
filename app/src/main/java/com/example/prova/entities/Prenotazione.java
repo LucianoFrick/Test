@@ -1,27 +1,30 @@
 package com.example.prova.entities;
 
 public class Prenotazione {
-    private String titolo;
-    private int voto;
-    private String testo;
+    private String citta;
+    private String negozio;
+    private int ora;
+    private int minuti;
+    private String durata;
 
-    public Prenotazione(String titolo, int voto, String testo){
-        this.titolo=titolo;
-        this.voto=voto;
-        this.testo=testo;
+    public Prenotazione(String citta, String negozio, int ora, int minuti, String durata){
+        this.citta=citta;
+        this.negozio=negozio;
+        this.ora=ora;
+        this.minuti=minuti;
+        this.durata=durata;
     }
 
-    public String getTitolo() {
-        return titolo;
+    public String getCitta() {
+        return citta;
     }
-
-    public int getVoto(){
-        return  voto;
+    public String getNegozio() { return negozio; }
+    public int getOra(){
+        return  ora;
     }
-
-    public String getTesto(){
-        return testo;
+    public int getMinuti(){ return  minuti; }
+    public String getDurata(){
+        return durata;
     }
-
 
 }

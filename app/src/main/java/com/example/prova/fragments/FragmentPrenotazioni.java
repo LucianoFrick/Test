@@ -21,8 +21,11 @@ import com.example.prova.uiutilities.FeedAdapter;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static android.app.Activity.RESULT_OK;
+
 public class FragmentPrenotazioni extends Fragment {
 
+    private static final int NEW_PRENOTATION = 301;
     private RecyclerView recyclerView;
     private FeedAdapter feedAdapter;
     private ArrayList<Prenotazione> recensioni;
@@ -48,16 +51,9 @@ public class FragmentPrenotazioni extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddActivity.class));
+                startActivityForResult(new Intent(getActivity(), AddActivity.class), NEW_PRENOTATION);
+                }
 
-                    String titolo = randomString(15);
-                    int voto = 5;
-                    String testo = randomString(90);
-
-                Prenotazione prenotazione = new Prenotazione(titolo, voto, testo);
-                recensioni.add(prenotazione);
-                    feedAdapter.notifyDataSetChanged();//ogni volta che fai modifica nella struttura affinche il recyclerview sia aggiornato bisogna richiamareil notify, cosi sa cheè stato cambiato e aggiorna visualizzazion
-            }
         });
         return view;
     }
@@ -74,4 +70,20 @@ public class FragmentPrenotazioni extends Fragment {
         return builder.toString();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if((requestCode==NEW_PRENOTATION) && (resultCode==RESULT_OK)){
+            String citta = data.getStringExtra("citta");
+            String negozio = data.getStringExtra("negozio");
+            int ora = Integer.parseInt(data.getStringExtra("ora"));
+            int minuti = Integer.parseInt(data.getStringExtra("minuti"));
+            String durata = data.getStringExtra("durata");
+
+            Prenotazione prenotazione = new Prenotazione(citta, negozio, ora, minuti,durata);
+            recensioni.add(prenotazione);
+            feedAdapter.notifyDataSetChanged();//ogni volta che fai modifica nella struttura affinche il recyclerview sia aggiornato bisogna richiamareil notify, cosi sa cheè stato cambiato e aggiorna visualizzazion
+
+        }
+    }
 }

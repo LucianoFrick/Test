@@ -16,13 +16,15 @@ import java.util.ArrayList;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CViewHolder>{
 
     class CViewHolder extends RecyclerView.ViewHolder{
-        TextView textTitolo, textVoto, textTesto;
+        TextView textCitta, textNegozio, textOra, textDurata;
 
         CViewHolder(@NonNull View itemView){
             super(itemView);
-            textTitolo =  itemView.findViewById(R.id.text_titolo);
-            textVoto =  itemView.findViewById(R.id.text_voto);
-            textTesto =  itemView.findViewById(R.id.text_testo);
+            textCitta =  itemView.findViewById(R.id.text_citta);
+            textNegozio =  itemView.findViewById(R.id.text_negozio);
+            textOra =  itemView.findViewById(R.id.text_ora);
+            textDurata =  itemView.findViewById(R.id.text_durata);
+
         }
     }
 
@@ -40,9 +42,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull CViewHolder holder, int position){
-        holder.textTitolo.setText(struttura.get(position).getTitolo());
-        holder.textVoto.setText(struttura.get(position).getVoto()+"");
-        holder.textTesto.setText(struttura.get(position).getTesto());
+        holder.textCitta.setText(struttura.get(position).getCitta());
+        holder.textNegozio.setText(struttura.get(position).getNegozio());
+        holder.textOra.setText(struttura.get(position).getOra()+":"+struttura.get(position).getMinuti());
+        holder.textDurata.setText(struttura.get(position).getDurata());
     }
 
     @Override

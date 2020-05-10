@@ -1,5 +1,6 @@
 package com.example.prova;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,6 +9,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.prova.fragments.FragmentProfilo;
 
 public class AddActivity extends AppCompatActivity {
     private Button btnPrenota;
@@ -43,6 +46,19 @@ public class AddActivity extends AppCompatActivity {
        durationSpinner.setAdapter(adapter6);
 
        btnPrenota=findViewById(R.id.btnPrenota);
+       btnPrenota.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(AddActivity.this, ProfileActivity.class);
+                intent.putExtra("citta", citySpinner.getSelectedItem().toString());
+               intent.putExtra("negozio", marketSpinner.getSelectedItem().toString());
+               intent.putExtra("ora", hourSpinner.getSelectedItem().toString());
+               intent.putExtra("minuti", minuteSpinner.getSelectedItem().toString());
+               intent.putExtra("durata", durationSpinner.getSelectedItem().toString());
+               setResult(ProfileActivity.RESULT_OK, intent);
+               finish();
+           }
+       });
 
 
        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

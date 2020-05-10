@@ -69,14 +69,11 @@ public class FragmentProfilo extends Fragment {
     FirebaseAuth nAuth = FirebaseAuth.getInstance();
     final FirebaseUser currentUser = nAuth.getCurrentUser();
 
-    private FirebaseStorage storage = FirebaseStorage.getInstance ();
-
     @Override
     public void onCreate( Bundle savedInstanceState) { super.onCreate(savedInstanceState);
 
 
     }
-
 
 
     @Override
@@ -108,8 +105,8 @@ public class FragmentProfilo extends Fragment {
                 if(permissionToRequest.size() > 0){ //va a richiedere i permessi
                     requestPermissions((String[]) permissionToRequest.toArray(new String[permissionToRequest.size()]), ALL_PERMISSION_RESULT);
                 }else{
-                    //startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
-                    showImageChooser();
+                    startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
+                    //showImageChooser();
                 }
             }
         });
@@ -117,11 +114,10 @@ public class FragmentProfilo extends Fragment {
     }
 
     private void loadUserInformation() {
-        FirebaseUser user = nAuth.getCurrentUser();
-        if (user != null) {
-            if (user.getPhotoUrl() != null) {
+        if (currentUser != null) {
+            if (currentUser.getPhotoUrl() != null) {
                 Glide.with(this)
-                        .load(user.getPhotoUrl().toString())
+                        .load(currentUser.getPhotoUrl().toString())
                         .centerCrop()
                         .into(propic);
             }else {
@@ -130,17 +126,17 @@ public class FragmentProfilo extends Fragment {
                         .centerCrop()
                         .into(propic);
             }
-            if (user.getDisplayName() != null) {
-                textNome.setText(user.getDisplayName());
+            if (currentUser.getDisplayName() != null) {
+                textNome.setText(currentUser.getDisplayName());
             }
         }
     }
-    private void showImageChooser() {
+    /*private void showImageChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Profile Image"), PICK_IMAGE);
-    }
+    }*/
 
     private void saveUserInformation() {
         String displayName = textNome.getText().toString();
@@ -150,9 +146,8 @@ public class FragmentProfilo extends Fragment {
             textNome.requestFocus();
             return;
         }
-        FirebaseUser user = nAuth.getCurrentUser();
 
-        if (user != null && profileImageUrl!= null) {
+        if (currentUser != null && profileImageUrl!= null) {
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                     .setDisplayName(displayName)
                     .setPhotoUri(Uri.parse(profileImageUrl))
@@ -172,12 +167,12 @@ public class FragmentProfilo extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if(requestCode==PICK_IMAGE &&  intent.getData() != null){
+        if(requestCode==PICK_IMAGE){
             Bitmap bitmap = null;
             if(resultCode == RESULT_OK){
                if (getPickImageResultUri(intent) != null){ //abbiamo caricato la nostra immagine come bitmap
-                    uriProfileImage=intent.getData();
-                    //uriProfileImage = getPickImageResultUri(intent);
+                    //uriProfileImage=intent.getData();
+                    uriProfileImage = getPickImageResultUri(intent);
                     try{
                         bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getContentResolver(),uriProfileImage);
 
@@ -325,7 +320,7 @@ public class FragmentProfilo extends Fragment {
                     Toast.makeText(getContext(), "Dovresti Approvare tutto", Toast.LENGTH_LONG).show();
                 }
             } else {
-             //   startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
+                startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
             }
         }
     }
