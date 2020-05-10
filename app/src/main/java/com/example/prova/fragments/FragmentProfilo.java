@@ -70,11 +70,9 @@ public class FragmentProfilo extends Fragment {
     final FirebaseUser currentUser = nAuth.getCurrentUser();
 
     @Override
-    public void onCreate( Bundle savedInstanceState) { super.onCreate(savedInstanceState);
-
-
+    public void onCreate( Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
-
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +84,7 @@ public class FragmentProfilo extends Fragment {
         textNome=view.findViewById(R.id.proName);
         textNome.setText(currentUser.getDisplayName());
         save=view.findViewById(R.id.save);
+
         loadUserInformation();
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +105,6 @@ public class FragmentProfilo extends Fragment {
                     requestPermissions((String[]) permissionToRequest.toArray(new String[permissionToRequest.size()]), ALL_PERMISSION_RESULT);
                 }else{
                     startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
-                    //showImageChooser();
                 }
             }
         });
@@ -131,22 +129,14 @@ public class FragmentProfilo extends Fragment {
             }
         }
     }
-    /*private void showImageChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Profile Image"), PICK_IMAGE);
-    }*/
 
     private void saveUserInformation() {
         String displayName = textNome.getText().toString();
-
         if(displayName.isEmpty()){
             textNome.setError("Name required");
             textNome.requestFocus();
             return;
         }
-
         if (currentUser != null && profileImageUrl!= null) {
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                     .setDisplayName(displayName)

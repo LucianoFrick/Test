@@ -15,6 +15,9 @@ public class Prenotazione {
         this.durata=durata;
     }
 
+    public Prenotazione() {
+    }
+
     public String getCitta() {
         return citta;
     }

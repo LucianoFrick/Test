@@ -2,18 +2,30 @@ package com.example.prova;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.prova.entities.Prenotazione;
 import com.example.prova.fragments.FragmentProfilo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddActivity extends AppCompatActivity {
     private Button btnPrenota;
+    FirebaseAuth nAuth = FirebaseAuth.getInstance();
+    final FirebaseUser currentUser = nAuth.getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +36,6 @@ public class AddActivity extends AppCompatActivity {
        final Spinner hourSpinner = findViewById(R.id.spinner_hour);
        final Spinner minuteSpinner = findViewById(R.id.spinner_minutes);
        final Spinner durationSpinner = findViewById(R.id.spinner_duration);
-
 
        ArrayAdapter<CharSequence> adapter = ArrayAdapter
                .createFromResource(this, R.array.cities, android.R.layout.simple_spinner_item);
@@ -46,21 +57,6 @@ public class AddActivity extends AppCompatActivity {
        durationSpinner.setAdapter(adapter6);
 
        btnPrenota=findViewById(R.id.btnPrenota);
-       btnPrenota.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent intent = new Intent(AddActivity.this, ProfileActivity.class);
-                intent.putExtra("citta", citySpinner.getSelectedItem().toString());
-               intent.putExtra("negozio", marketSpinner.getSelectedItem().toString());
-               intent.putExtra("ora", hourSpinner.getSelectedItem().toString());
-               intent.putExtra("minuti", minuteSpinner.getSelectedItem().toString());
-               intent.putExtra("durata", durationSpinner.getSelectedItem().toString());
-               setResult(ProfileActivity.RESULT_OK, intent);
-               finish();
-           }
-       });
-
-
        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
            @Override
            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -80,5 +76,32 @@ public class AddActivity extends AppCompatActivity {
 
            }
        });
+        btnPrenota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveNote(citySpinner, marketSpinner, hourSpinner, minuteSpinner, durationSpinner);
+            }
+        });
     }
+
+    private void saveNote(Spinner citySpinner, Spinner marketSpinner, Spinner hourSpinner, Spinner minuteSpinner, Spinner durationSpinner) {
+            String citta = citySpinner.getSelectedItem().toString();
+            String negozio = marketSpinner.getSelectedItem().toString();
+            int ora = Integer.parseInt(hourSpinner.getSelectedItem().toString());
+            int minuti = Integer.parseInt(minuteSpinner.getSelectedItem().toString());
+            String durata = durationSpinner.getSelectedItem().toString();
+
+            if (citta.trim().isEmpty() || negozio.trim().isEmpty()) {
+                Toast.makeText(this, "Please insert all fields", Toast.LENGTH_LONG);
+            }
+
+            CollectionReference notebookRef = FirebaseFirestore.getInstance()
+                    .collection(currentUser+"Notebook");
+            notebookRef.add(new Prenotazione(citta, negozio, ora, minuti, durata));
+            Toast.makeText(this, "Note added", Toast.LENGTH_SHORT);
+            finish();
+
+    }
+
+
 }
