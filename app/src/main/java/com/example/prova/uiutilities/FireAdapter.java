@@ -40,12 +40,6 @@ public class FireAdapter extends FirestoreRecyclerAdapter<Prenotazione, FireAdap
         getSnapshots().getSnapshot(position).getReference().delete();
     }
 
-    public void startListening() {
-    }
-
-    public void stopListening() {
-    }
-
     class FireHolder extends RecyclerView.ViewHolder{
 
         TextView textCitta, textNegozio, textOra, textDurata;

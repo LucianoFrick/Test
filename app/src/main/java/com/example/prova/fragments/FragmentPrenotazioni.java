@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.prova.activities.AddActivity;
 import com.example.prova.R;
+import com.example.prova.activities.AddActivity;
 import com.example.prova.entities.Prenotazione;
 import com.example.prova.uiutilities.FireAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -47,6 +47,12 @@ public class FragmentPrenotazioni extends Fragment {
         setUpRecyclerView();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
 
     @Nullable
     @Override
@@ -56,6 +62,20 @@ public class FragmentPrenotazioni extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+
+        //gestore interazioni
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, // lo zero significa che non fa nulla con il drag and drop, ma solo con swipe left e right
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.deleteItem(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(recyclerView);
 
 
         btnAdd=view.findViewById(R.id.button_add);
@@ -74,26 +94,11 @@ public class FragmentPrenotazioni extends Fragment {
                 new FirestoreRecyclerOptions.Builder<Prenotazione>()
                         .setQuery(query, Prenotazione.class).build();
         adapter=new FireAdapter(options);
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, // lo zero significa che non fa nulla con il drag and drop, ma solo con swipe left e right
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.deleteItem(viewHolder.getAdapterPosition());
-            }
-        }).attachToRecyclerView(recyclerView);
+
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
 
     @Override
     public void onStop() {

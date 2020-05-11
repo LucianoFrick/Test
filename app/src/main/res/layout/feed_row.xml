@@ -19,13 +19,14 @@
         android:id="@+id/text_negozio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="10dp"
+        android:textSize="20dp"
         android:textStyle="italic"
         android:textAlignment="textEnd"
         android:id="@+id/text_ora"/>
