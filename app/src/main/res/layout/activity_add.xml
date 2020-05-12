@@ -29,7 +29,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24dp"
-        android:textStyle="bold"
+        android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
@@ -39,15 +39,15 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="332dp"
+        android:layout_height="41dp"
         android:layout_marginTop="208dp"
+        android:background="@color/backgroundPrenotazione"
         android:gravity="center"
         android:orientation="horizontal"
-        android:background="@color/backgroundPrenotazione"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="10dp">
 
         <TextView
             android:id="@+id/textCity"
@@ -56,7 +56,8 @@
             android:layout_gravity="start"
             android:gravity="center_vertical"
             android:text="@string/city"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <Spinner
             android:id="@+id/spinner_city"
@@ -67,11 +68,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="333dp"
+        android:layout_height="42dp"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal"
-        android:background="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="@+id/linearLayout2"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
@@ -82,7 +83,8 @@
             android:layout_gravity="start"
             android:gravity="center_vertical"
             android:text="@string/market"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <Spinner
             android:id="@+id/spinner_market"
@@ -93,11 +95,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="332dp"
+        android:layout_height="40dp"
+        android:background="@color/backgroundPrenotazione"
         android:gravity="center"
         android:orientation="horizontal"
-        android:background="@color/backgroundPrenotazione"
         app:layout_constraintStart_toStartOf="@+id/linearLayout3"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
@@ -108,7 +110,8 @@
             android:layout_gravity="start"
             android:gravity="center_vertical"
             android:text="@string/orario"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <Spinner
             android:id="@+id/spinner_hour"
@@ -124,11 +127,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="321dp"
+        android:layout_height="41dp"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal"
-        android:background="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="@+id/linearLayout4"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
@@ -139,7 +142,8 @@
             android:layout_gravity="start"
             android:gravity="center_vertical"
             android:text="@string/durata"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <Spinner
             android:id="@+id/spinner_duration"
