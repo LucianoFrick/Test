@@ -10,6 +10,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -24,9 +25,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
         try{
+            //Inserisco lat e lng del paese selezionato in due variabili
             Bundle datiPassati = getIntent().getExtras();
             latit = datiPassati.getDouble("latit", 0);
             longit = datiPassati.getDouble("longit", 0);
+
         }catch (NullPointerException e){
             Toast.makeText(this, "SCEGLI LA CITTA", Toast.LENGTH_SHORT).show();
         }
@@ -52,10 +55,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        LatLng paese = new LatLng(latit, longit); //creo variabile di tipo LatLng e ci metto le informazioni ricevute dall'addActivity
+
+        // Add a marker in paese and move the camera
+        CameraPosition posizionePaese = new CameraPosition.Builder().target(
+                paese).zoom(15).build();
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(posizionePaese));
+        MarkerOptions marker = new MarkerOptions().position(paese);
+        googleMap.addMarker(marker);
+
         // Add a marker in Cupra and move the camera
-        LatLng cupra = new LatLng(latit, longit);
+
+/*
         mMap.addMarker(new MarkerOptions().position(cupra).title("Marker in Cupra"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(cupra));
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(cupra)); */
 
     }
+
 }

@@ -62,13 +62,11 @@ public class AddActivity extends AppCompatActivity {
                switch(cityValue){
                    case "Camerano":
                        marketSpinner.setAdapter(adapter2);
-                       double latit=43.00;
-                       double longit =13.00;
+
                        break;
                    case "CupraMontana":
                        marketSpinner.setAdapter(adapter3);
-                       double latit2=43.4497;
-                       double longit2 =13.1131;
+
                        break;
                }
            }
@@ -95,8 +93,8 @@ public class AddActivity extends AppCompatActivity {
                 String cityValue = citySpinner.getSelectedItem().toString();
                 switch(cityValue){
                     case "Camerano":
-                        double latit=43.00;
-                        double longit =13.00;
+                        double latit=43.5312679;
+                        double longit =13.5515741;
 
                         intent.putExtra("latit", latit);
                         intent.putExtra("longit", longit);
