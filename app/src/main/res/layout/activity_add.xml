@@ -7,31 +7,47 @@
     android:padding="10dp"
     tools:context=".activities.AddActivity">
 
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_launcher_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
     <TextView
         android:id="@+id/text_add"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginEnd="11dp"
+        android:layout_width="266dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="1dp"
         android:text="@string/add"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="26dp"
+        android:textSize="24dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout2" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.59" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="177dp"
+        android:layout_marginTop="208dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/backgroundPrenotazione"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="10dp"
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/textCity"
@@ -55,8 +71,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout5"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <TextView
@@ -81,8 +97,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/backgroundPrenotazione"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <TextView
@@ -108,12 +124,12 @@
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="9dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout4"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <TextView
@@ -136,18 +152,24 @@
         android:id="@+id/btnPrenota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="20dp"
         android:text="Prenota"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
     <Button
         android:id="@+id/btnMaps"
         android:layout_width="150dp"
         android:layout_height="100dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="28dp"
         android:text="APRI MAPS"
-        app:layout_constraintEnd_toEndOf="@+id/btnPrenota"
-        app:layout_constraintStart_toStartOf="@+id/btnPrenota"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.407"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnPrenota" />
 
 
