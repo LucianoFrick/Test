@@ -109,6 +109,7 @@ public class AddActivity extends AppCompatActivity {
                         intent.putExtra("longit", longit2);
                         break;
                 }
+                        intent.putExtra("citta",citySpinner.getSelectedItem().toString());
                         finish();
                         startActivity(intent);
             }

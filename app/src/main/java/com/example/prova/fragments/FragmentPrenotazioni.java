@@ -33,7 +33,6 @@ public class FragmentPrenotazioni extends Fragment {
     final FirebaseUser currentUser = nAuth.getCurrentUser();
     private static final int NEW_PRENOTATION = 301;
     private RecyclerView recyclerView;
-    private ArrayList<Prenotazione> recensioni;
     private ImageButton btnAdd;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -43,14 +42,13 @@ public class FragmentPrenotazioni extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recensioni=new ArrayList<>();
         setUpRecyclerView();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
+        adapter.startListening(); //l'adapter comincia ad aggiornarsi
     }
 
 
@@ -88,7 +86,7 @@ public class FragmentPrenotazioni extends Fragment {
         });
         return view;
     }
-    private void setUpRecyclerView() {
+    private void setUpRecyclerView() {//metodo che prende in real time le informazioni da firebase
         Query query = notebookRef.orderBy("ora",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Prenotazione> options =
                 new FirestoreRecyclerOptions.Builder<Prenotazione>()
@@ -97,8 +95,6 @@ public class FragmentPrenotazioni extends Fragment {
 
 
     }
-
-
 
     @Override
     public void onStop() {

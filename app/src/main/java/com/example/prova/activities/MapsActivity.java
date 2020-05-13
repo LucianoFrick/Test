@@ -14,10 +14,15 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private double latit, longit;
+    private ArrayList<LatLng> markers;
+    String citta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Bundle datiPassati = getIntent().getExtras();
             latit = datiPassati.getDouble("latit", 0);
             longit = datiPassati.getDouble("longit", 0);
+            citta=datiPassati.getString("citta", null);
 
         }catch (NullPointerException e){
             Toast.makeText(this, "SCEGLI LA CITTA", Toast.LENGTH_SHORT).show();
@@ -59,10 +65,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in paese and move the camera
         CameraPosition posizionePaese = new CameraPosition.Builder().target(
-                paese).zoom(15).build();
+                paese).zoom(13).build();
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(posizionePaese));
-        MarkerOptions marker = new MarkerOptions().position(paese);
-        googleMap.addMarker(marker);
+
+        markers = new ArrayList<>();
+        switch(citta){
+            case "CupraMontana":
+                LatLng SiCamilletti = new LatLng(43.457222, 13.107696);
+                LatLng AlimentariMauro = new LatLng(43.448703, 13.120636);
+                LatLng CoalCu = new LatLng(43.445378, 13.113300);
+                markers.add(SiCamilletti);
+                markers.add(AlimentariMauro);
+                markers.add(CoalCu);
+                break;
+            case "Camerano":
+                LatLng SiLoretana = new LatLng(43.522577, 13.557408);
+                LatLng SiFazioli = new LatLng(43.530817, 13.548291);
+                LatLng Carrefour = new LatLng(43.521072, 13.525623);
+                LatLng CoalCa = new LatLng(43.530959, 13.555702);
+                markers.add(SiFazioli);
+                markers.add(SiLoretana);
+                markers.add(Carrefour);
+                markers.add(CoalCa);
+                break;
+        }
+
+        for(LatLng i : markers) {
+            MarkerOptions marker = new MarkerOptions().position(i);
+            googleMap.addMarker(marker);
+        }
 
         // Add a marker in Cupra and move the camera
 
