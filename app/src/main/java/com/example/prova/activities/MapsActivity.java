@@ -70,7 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         markers = new ArrayList<>();
         switch(citta){
-            case "CupraMontana":
+            case "CupraMontana": //SCELTA DI MERDA
                 LatLng SiCamilletti = new LatLng(43.457222, 13.107696);
                 LatLng AlimentariMauro = new LatLng(43.448703, 13.120636);
                 LatLng CoalCu = new LatLng(43.445378, 13.113300);
@@ -78,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 markers.add(AlimentariMauro);
                 markers.add(CoalCu);
                 break;
-            case "Camerano":
+            case "Camerano"://SCELTA SAGGIA
                 LatLng SiLoretana = new LatLng(43.522577, 13.557408);
                 LatLng SiFazioli = new LatLng(43.530817, 13.548291);
                 LatLng Carrefour = new LatLng(43.521072, 13.525623);
@@ -94,14 +94,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             MarkerOptions marker = new MarkerOptions().position(i);
             googleMap.addMarker(marker);
         }
-
-        // Add a marker in Cupra and move the camera
-
-/*
-        mMap.addMarker(new MarkerOptions().position(cupra).title("Marker in Cupra"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(cupra));
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(cupra)); */
-
     }
 
 }

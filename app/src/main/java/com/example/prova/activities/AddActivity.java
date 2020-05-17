@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.prova.R;
+import com.example.prova.entities.Days;
 import com.example.prova.entities.Prenotazione;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -80,6 +81,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveNote(citySpinner, marketSpinner, hourSpinner, minuteSpinner, durationSpinner);
+                updateData(marketSpinner, hourSpinner, minuteSpinner);
             }
         });
 
@@ -110,10 +112,15 @@ public class AddActivity extends AppCompatActivity {
                         break;
                 }
                         intent.putExtra("citta",citySpinner.getSelectedItem().toString());
-                        finish();
                         startActivity(intent);
             }
         });
+    }
+
+    private void updateData(Spinner marketSpinner, Spinner hour, Spinner minute) {
+        Days k = new Days();
+
+
     }
 
     private void saveNote(Spinner citySpinner, Spinner marketSpinner, Spinner hourSpinner, Spinner minuteSpinner, Spinner durationSpinner) {
