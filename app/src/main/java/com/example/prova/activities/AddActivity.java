@@ -1,26 +1,34 @@
 package com.example.prova.activities;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.prova.R;
 import com.example.prova.entities.Days;
 import com.example.prova.entities.Prenotazione;
+import com.example.prova.fragments.DatePickerFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AddActivity extends AppCompatActivity {
-    private Button btnPrenota;
+import java.text.DateFormat;
+import java.util.Calendar;
+
+public class AddActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    private Button btnPrenota, btnDate;
     private Button btnMaps;
     FirebaseAuth nAuth = FirebaseAuth.getInstance();
     final FirebaseUser currentUser = nAuth.getCurrentUser();
@@ -55,7 +63,6 @@ public class AddActivity extends AppCompatActivity {
        minuteSpinner.setAdapter(adapter5);
        durationSpinner.setAdapter(adapter6);
 
-       btnPrenota=findViewById(R.id.btnPrenota);
        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
            @Override
            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -77,6 +84,8 @@ public class AddActivity extends AppCompatActivity {
 
            }
        });
+
+        btnPrenota=findViewById(R.id.btnPrenota);
         btnPrenota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,11 +124,31 @@ public class AddActivity extends AppCompatActivity {
                         startActivity(intent);
             }
         });
+
+        btnDate=findViewById(R.id.button_data);
+        btnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String chosenDate = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+
+        TextView dateText = findViewById(R.id.text_data);
+        dateText.setText(chosenDate);
     }
 
     private void updateData(Spinner marketSpinner, Spinner hour, Spinner minute) {
         Days k = new Days();
-
 
     }
 
