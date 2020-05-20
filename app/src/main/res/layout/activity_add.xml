@@ -69,12 +69,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="9dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+        tools:layout_editor_absoluteY="440dp">
 
         <Button
             android:id="@+id/button_data"
@@ -137,43 +136,12 @@
         android:id="@+id/btnPrenota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="120dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="128dp"
         android:text="Prenota"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button2" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="9dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
-        <TextView
-            android:id="@+id/textduration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:gravity="center_vertical"
-            android:text="@string/durata"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/spinner_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center" />
-    </LinearLayout>
+        app:layout_constraintStart_toEndOf="@+id/button_check" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -209,13 +177,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="19dp"
         android:text="check"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnPrenota"
         app:layout_constraintEnd_toStartOf="@+id/btnPrenota"
+        app:layout_constraintHorizontal_bias="0.299"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

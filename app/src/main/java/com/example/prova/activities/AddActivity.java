@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.prova.R;
-import com.example.prova.entities.Days;
 import com.example.prova.entities.Prenotazione;
 import com.example.prova.fragments.DatePickerFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,11 +24,13 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    private Button btnPrenota, btnDate;
+    private Button btnPrenota, btnDate, btnCheck;
     private Button btnMaps;
+    private int y, mo , d;
     FirebaseAuth nAuth = FirebaseAuth.getInstance();
     final FirebaseUser currentUser = nAuth.getCurrentUser();
 
@@ -42,7 +43,6 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
        final Spinner marketSpinner = findViewById(R.id.spinner_market);
        final Spinner hourSpinner = findViewById(R.id.spinner_hour);
        final Spinner minuteSpinner = findViewById(R.id.spinner_minutes);
-       final Spinner durationSpinner = findViewById(R.id.spinner_duration);
 
        ArrayAdapter<CharSequence> adapter = ArrayAdapter
                .createFromResource(this, R.array.cities, android.R.layout.simple_spinner_item);
@@ -61,7 +61,6 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
        citySpinner.setAdapter(adapter);
        hourSpinner.setAdapter(adapter4);
        minuteSpinner.setAdapter(adapter5);
-       durationSpinner.setAdapter(adapter6);
 
        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
            @Override
@@ -89,8 +88,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
         btnPrenota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveNote(citySpinner, marketSpinner, hourSpinner, minuteSpinner, durationSpinner);
-                updateData(marketSpinner, hourSpinner, minuteSpinner);
+                saveNote(citySpinner, marketSpinner, hourSpinner, minuteSpinner);
             }
         });
 
@@ -133,39 +131,64 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
                 datePicker.show(getSupportFragmentManager(), "date picker");
             }
         });
+
+        btnCheck=findViewById(R.id.button_check);
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkData(hourSpinner, minuteSpinner, marketSpinner);
+            }
+        });
+    }
+
+    private void checkData(Spinner hourS, Spinner minuteS, Spinner marketS) {
+        int x = Integer.parseInt(hourS.getSelectedItem().toString()) - 8;
+        int z = Integer.parseInt(minuteS.getSelectedItem().toString()) / 10;
+
+        CollectionReference notebookRef = FirebaseFirestore.getInstance()
+                .collection(marketS.getSelectedItem().toString() + d+mo+y);
+
+        Toast.makeText(this,String.valueOf(notebookRef), Toast.LENGTH_LONG);
+
+
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
+        y=year;
         c.set(Calendar.MONTH, month);
+        mo=month;
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        d=dayOfMonth;
         String chosenDate = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
 
         TextView dateText = findViewById(R.id.text_data);
         dateText.setText(chosenDate);
     }
 
-    private void updateData(Spinner marketSpinner, Spinner hour, Spinner minute) {
-        Days k = new Days();
-
-    }
-
-    private void saveNote(Spinner citySpinner, Spinner marketSpinner, Spinner hourSpinner, Spinner minuteSpinner, Spinner durationSpinner) {
+    private void saveNote(Spinner citySpinner, Spinner marketSpinner, Spinner hourSpinner, Spinner minuteSpinner) {
             String citta = citySpinner.getSelectedItem().toString();
             String negozio = marketSpinner.getSelectedItem().toString();
             int ora = Integer.parseInt(hourSpinner.getSelectedItem().toString());
             int minuti = Integer.parseInt(minuteSpinner.getSelectedItem().toString());
-            String durata = durationSpinner.getSelectedItem().toString();
 
             if (citta.trim().isEmpty() || negozio.trim().isEmpty()) {
                 Toast.makeText(this, "Please insert all fields", Toast.LENGTH_LONG);
             }
 
+            //salva prenotazione nella cartella dell'utente
             CollectionReference notebookRef = FirebaseFirestore.getInstance()
-                    .collection(currentUser.getEmail()+"_Notebook");
-            notebookRef.add(new Prenotazione(citta, negozio, ora, minuti, durata));
+                    .collection("utenti").document(currentUser.getEmail()).collection("Prenotazioni");
+            notebookRef.add(new Prenotazione(citta, negozio, ora, minuti));
+
+        //salva prenotazione nella cartella di tutte le prenotazioni
+        notebookRef = FirebaseFirestore.getInstance()
+                .collection("Supermercati").document(marketSpinner.getSelectedItem().toString()).collection("Prenotazioni");
+        notebookRef.add(new Prenotazione(citta, negozio, ora, minuti));
+
+
             Toast.makeText(this, "Note added", Toast.LENGTH_SHORT);
             finish();
 

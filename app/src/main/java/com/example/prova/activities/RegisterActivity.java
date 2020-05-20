@@ -31,6 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth nAuth;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +100,8 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("password", password);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("utenti").document(uid).set(user);
+        FirebaseUser currentUser = nAuth.getCurrentUser();
+        db.collection("utenti").document(currentUser.getEmail()).collection("Info").document(uid).set(user);
     }
 
     private void registerUser (final String nome, final String cognome, final String email, final String password){

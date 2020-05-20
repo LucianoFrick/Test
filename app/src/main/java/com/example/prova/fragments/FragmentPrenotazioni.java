@@ -36,7 +36,7 @@ public class FragmentPrenotazioni extends Fragment {
     private ImageButton btnAdd;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference notebookRef = db.collection(currentUser.getEmail()+"_Notebook");
+    private CollectionReference notebookRef = db.collection("utenti").document(currentUser.getEmail()).collection("Prenotazioni");
 
     private FireAdapter adapter;
     @Override

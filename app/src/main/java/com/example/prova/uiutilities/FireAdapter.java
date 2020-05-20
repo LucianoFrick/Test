@@ -26,7 +26,6 @@ public class FireAdapter extends FirestoreRecyclerAdapter<Prenotazione, FireAdap
         fireHolder.textCitta.setText(prenotazione.getCitta());
         fireHolder.textNegozio.setText(prenotazione.getNegozio());
         fireHolder.textOra.setText(String.format("%d:%d", prenotazione.getOra(), prenotazione.getMinuti()));
-        fireHolder.textDurata.setText(prenotazione.getDurata());
     }
 
     @NonNull
@@ -42,15 +41,13 @@ public class FireAdapter extends FirestoreRecyclerAdapter<Prenotazione, FireAdap
 
     class FireHolder extends RecyclerView.ViewHolder{
 
-        TextView textCitta, textNegozio, textOra, textDurata;
+        TextView textCitta, textNegozio, textOra;
 
         public FireHolder(@NonNull View itemView) {
             super(itemView);
             textCitta =  itemView.findViewById(R.id.text_citta);
             textNegozio =  itemView.findViewById(R.id.text_negozio);
             textOra =  itemView.findViewById(R.id.text_ora);
-            textDurata =  itemView.findViewById(R.id.text_durata);
-
         }
     }
 }
