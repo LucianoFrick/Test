@@ -15,7 +15,7 @@ import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment {
     @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {  // non lo so bene manco io ho copiato da un indiano, comuqnue crea date picker e funziona quindi bona
         Calendar calendar= Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,7 +88,7 @@ public class FragmentPrenotazioni extends Fragment {
         return view;
     }
     private void setUpRecyclerView() {//metodo che prende in real time le informazioni da firebase
-        Query query = notebookRef.orderBy("ora",Query.Direction.DESCENDING);
+        Query query = notebookRef.orderBy("citta",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Prenotazione> options =
                 new FirestoreRecyclerOptions.Builder<Prenotazione>()
                         .setQuery(query, Prenotazione.class).build();
@@ -100,5 +101,13 @@ public class FragmentPrenotazioni extends Fragment {
     public void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==NEW_PRENOTATION)
+            Toast.makeText(getActivity(), "Note added", Toast.LENGTH_SHORT);
     }
 }
