@@ -97,6 +97,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
        });
 
         btnPrenota=findViewById(R.id.btnPrenota);
+        btnPrenota.setEnabled(false);//pulsante non cliccabile finché non ho fatto il check
         btnPrenota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,6 +228,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
                 countText.setText(String.valueOf(count[0])); //se trovo aumento di 1, non funzona come contatore solo si o no (va migliorato)
             }
         });
+        btnPrenota.setEnabled(true);
         Log.e("ts", String.valueOf(ts));
 
     }
