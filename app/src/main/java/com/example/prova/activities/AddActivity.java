@@ -211,7 +211,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
     private void check(Spinner hourSpinner, Spinner minuteSpinner, Spinner marketSpinner){ //controlla prenotazioni
         final int ora = Integer.parseInt(hourSpinner.getSelectedItem().toString());
         final int minuti = Integer.parseInt(minuteSpinner.getSelectedItem().toString());
-        final int[] count = {0};
+        final int[] count = {0}; //ho dovuto mette sta merda perchè per usare variabile nel listener deve essere final, ma se è final non gli puoi cambiare valore...così funziona e vaffanculo
 
         //creo una variabile calendario con le scelte fatte
         c.set(Calendar.HOUR, ora);
@@ -227,8 +227,8 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                for(DocumentSnapshot snapshot : list){
+                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments(); //creo una lista con ogni document otrovato con quel ts
+                for(DocumentSnapshot snapshot : list){ //per ogni documento della lista incremento contatore di uno
                     count[0] += 1;
                     countText.setText(String.valueOf(count[0])); //se trovo aumento di 1, non funzona come contatore solo si o no (va migliorato)
                 }
@@ -239,10 +239,4 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
         Log.e("ts", String.valueOf(ts));
 
     }
-
-    public int count(int c){
-        c++;
-        return  c;
-    }
-
 }
