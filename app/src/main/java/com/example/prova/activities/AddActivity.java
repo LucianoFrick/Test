@@ -2,6 +2,7 @@ package com.example.prova.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -150,11 +152,10 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check(hourSpinner, minuteSpinner,marketSpinner);
+                check(hourSpinner, minuteSpinner,marketSpinner, dateText);
                   }
         });
     }
-
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -177,11 +178,6 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
                     .collection("utenti").document(currentUser.getEmail()).collection("Prenotazioni");
             final CollectionReference notebookRef2 = FirebaseFirestore.getInstance()
                     .collection("Supermercati").document(marketSpinner.getSelectedItem().toString()).collection("Prenotazioni");
-
-            if(data.getText().equals("Scegli la data")){ //se il text data è quello di default crea toast e si stoppa
-                Toast.makeText(AddActivity.this, "Inserisci data", Toast.LENGTH_LONG).show();
-                return;
-            }
 
         notebookRef2.document(currentUser.getEmail()+data.getText())//metodo che controlla se esiste già una mia prenotazione per qeul supermercato in quel giorno, procede solo in caso di false
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -208,17 +204,22 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
         });
     }
 
-    private void check(Spinner hourSpinner, Spinner minuteSpinner, Spinner marketSpinner){ //controlla prenotazioni
+    private void check(Spinner hourSpinner, Spinner minuteSpinner, Spinner marketSpinner, TextView data){ //controlla prenotazioni
         final int ora = Integer.parseInt(hourSpinner.getSelectedItem().toString());
         final int minuti = Integer.parseInt(minuteSpinner.getSelectedItem().toString());
         final int[] count = {0}; //ho dovuto mette sta merda perchè per usare variabile nel listener deve essere final, ma se è final non gli puoi cambiare valore...così funziona e vaffanculo
 
+        if(data.getText().equals("Scegli la data")){ //se il text data è quello di default crea toast e si stoppa
+            Toast.makeText(AddActivity.this, "Inserisci data", Toast.LENGTH_LONG).show();
+            return;
+        }
         //creo una variabile calendario con le scelte fatte
         c.set(Calendar.HOUR, ora);
         c.set(Calendar.MINUTE, minuti);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
         ts=c.getTimeInMillis()/1000;//creo variabile time stamp in base al calendario creato, divido per mille perche non conto i millisecondi
+
 
 
         FirebaseFirestore.getInstance().collection("Supermercati").document(marketSpinner.getSelectedItem().toString()).
@@ -229,14 +230,29 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
 
                 List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments(); //creo una lista con ogni document otrovato con quel ts
                 for(DocumentSnapshot snapshot : list){ //per ogni documento della lista incremento contatore di uno
-                    count[0] += 1;
-                    countText.setText(String.valueOf(count[0])); //se trovo aumento di 1, non funzona come contatore solo si o no (va migliorato)
+                    count[0] += 1;//se trovo aumento di 1
                 }
+
+                if(count[0]<=5) {
+                    countText.setTextColor(Color.GREEN);
+                    countText.setText(String.format("Libero: %s persone.", String.valueOf(count[0])));
+                }
+                else if (count[0]<=10){
+                    countText.setTextColor(Color.YELLOW);
+                    countText.setText(String.format("Leggermente affollato: %s persone.", String.valueOf(count[0])));
+                }
+                else{
+                    countText.setTextColor(Color.RED);
+                    countText.setText(String.format("Molto affollato: %s persone.", String.valueOf(count[0])));
+                }
+
             }
+
         });
 
         btnPrenota.setEnabled(true);
         Log.e("ts", String.valueOf(ts));
+
 
     }
 }

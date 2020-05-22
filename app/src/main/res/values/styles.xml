@@ -11,4 +11,8 @@
     <style name="DatePicker" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent"> @color/colorDate</item>
     </style>
+
+    <style name="BlueButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>
