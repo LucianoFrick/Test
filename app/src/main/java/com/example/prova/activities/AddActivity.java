@@ -30,10 +30,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private Button btnPrenota, btnDate, btnCheck;
@@ -216,21 +218,31 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
         c.set(Calendar.MINUTE, minuti);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
-        ts=c.getTimeInMillis();//creo variabile time stamp in base al calendario creato
+        ts=c.getTimeInMillis()/1000;//creo variabile time stamp in base al calendario creato, divido per mille perche non conto i millisecondi
 
 
         FirebaseFirestore.getInstance().collection("Supermercati").document(marketSpinner.getSelectedItem().toString()).
                 collection("Prenotazioni").whereEqualTo("ts", ts).get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() { // vado nel percorso di firebae del upermercato che ho scelto e guardo se ci sono documenti con il mio stesso timestamp
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() { // vado nel percorso di firebase del upermercato che ho scelto e guardo se ci sono documenti con il mio stesso timestamp
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                count[0]++;
-                countText.setText(String.valueOf(count[0])); //se trovo aumento di 1, non funzona come contatore solo si o no (va migliorato)
+
+                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                for(DocumentSnapshot snapshot : list){
+                    count[0] += 1;
+                    countText.setText(String.valueOf(count[0])); //se trovo aumento di 1, non funzona come contatore solo si o no (va migliorato)
+                }
             }
         });
+
         btnPrenota.setEnabled(true);
         Log.e("ts", String.valueOf(ts));
 
+    }
+
+    public int count(int c){
+        c++;
+        return  c;
     }
 
 }
