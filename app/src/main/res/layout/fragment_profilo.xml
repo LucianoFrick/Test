@@ -39,10 +39,11 @@
         android:id="@+id/proName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:textAlignment="center"
         android:text=""
+        android:fontFamily="Roboto-italic"
         android:textColor="@android:color/black"
-        android:textSize="20dp"
+        android:textSize="28sp"
         android:textStyle="bold"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +52,8 @@
 
     <Button
         android:id="@+id/save"
+        style="@style/BlueButton"
+        android:background="@drawable/mybuttonimportant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="188dp"

@@ -67,7 +67,10 @@
         <item>30</item>
         <item>45</item>
     </string-array>
+
     <string name="title_activity_maps">Map</string>
+    <string name="login">Login</string>
+    <string name="gotoregister">Non hai un account? Clicca qui</string>
 
 
 </resources>

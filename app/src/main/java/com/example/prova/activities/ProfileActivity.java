@@ -20,8 +20,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileActivity extends AppCompatActivity {
-    private ImageView propic;
-    public TextView textNome;
     private BottomNavigationView bottomNav;
     private FragmentProfilo fragmentProfilo;
     private FragmentPrenotazioni fragmentPrenotazioni;
@@ -48,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        getSupportActionBar().setTitle(getString(R.string.benvenuti));
+        getSupportActionBar().setTitle(getString(R.string.app_name));
 
         fragmentPrenotazioni = new FragmentPrenotazioni();
         fragmentProfilo= new FragmentProfilo();

@@ -75,23 +75,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailLogin" />
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log In"
-        app:layout_constraintEnd_toEndOf="@+id/passwordLogin"
-        app:layout_constraintTop_toBottomOf="@+id/passwordLogin" />
+        <Button
+            android:id="@+id/btnLogin"
+            style="@style/BlueButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/mybutton"
+            android:text="@string/login"
+            app:layout_constraintEnd_toEndOf="@+id/passwordLogin"
+            app:layout_constraintTop_toBottomOf="@+id/passwordLogin" />
 
-    <Button
+        <Button
         android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
+            style="@style/BlueButton"
+            android:background="@drawable/mybuttonimportant"
+            android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
-        android:background="@color/colorPrimary"
-        android:text="Se non hai ancora un account clicca qui"
+        android:text="@string/gotoregister"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

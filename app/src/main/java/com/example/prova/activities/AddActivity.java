@@ -61,15 +61,15 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
        final TextView dateText = findViewById(R.id.text_data);
        countText=findViewById(R.id.text_count);
 
-       ArrayAdapter<CharSequence> adapter = ArrayAdapter
+       final ArrayAdapter<CharSequence> adapter = ArrayAdapter
                .createFromResource(this, R.array.cities, android.R.layout.simple_spinner_item);
        final ArrayAdapter<CharSequence> adapter2 = ArrayAdapter
                .createFromResource(this, R.array.marketCamerano, android.R.layout.simple_spinner_item);
        final ArrayAdapter<CharSequence> adapter3 = ArrayAdapter
                 .createFromResource(this, R.array.marketCupra, android.R.layout.simple_spinner_item);
-       ArrayAdapter<CharSequence> adapter4 = ArrayAdapter
+       final ArrayAdapter<CharSequence> adapter4 = ArrayAdapter
                 .createFromResource(this, R.array.hours, android.R.layout.simple_spinner_item);
-       ArrayAdapter<CharSequence> adapter5 = ArrayAdapter
+       final ArrayAdapter<CharSequence> adapter5 = ArrayAdapter
                 .createFromResource(this, R.array.minutes, android.R.layout.simple_spinner_item);
 
 

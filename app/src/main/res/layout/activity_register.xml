@@ -86,15 +86,18 @@
 
     <Button
         android:id="@+id/button"
+        android:background="@drawable/mybutton"
         android:layout_width="143dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="20dp"
-        android:background="@color/colorPrimary"
         android:text="@string/registrationButton"
         android:textColor="@android:color/white" />
 
     <Button
+        style="@style/BlueButton"
+        android:background="@drawable/mybuttonimportant"
+        android:layout_marginTop="20dp"
         android:id="@+id/btnAlready"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -88,7 +88,7 @@ public class FragmentPrenotazioni extends Fragment {
         return view;
     }
     private void setUpRecyclerView() {//metodo che prende in real time le informazioni da firebase
-        Query query = notebookRef.orderBy("citta",Query.Direction.DESCENDING);
+        Query query = notebookRef.orderBy("data",Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Prenotazione> options =
                 new FirestoreRecyclerOptions.Builder<Prenotazione>()
                         .setQuery(query, Prenotazione.class).build();
