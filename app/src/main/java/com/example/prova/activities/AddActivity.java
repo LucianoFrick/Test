@@ -85,11 +85,9 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
                switch(cityValue){
                    case "Camerano":
                        marketSpinner.setAdapter(adapter2);
-
                        break;
                    case "CupraMontana":
                        marketSpinner.setAdapter(adapter3);
-
                        break;
                }
            }
@@ -143,7 +141,8 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePicker = new DatePickerFragment(); //crea fragment dialog con date picker
+                DialogFragment datePicker = new DatePickerFragment();
+                //crea fragment dialog con date picker
                 datePicker.show(getSupportFragmentManager(), "date picker");
             }
         });
@@ -186,7 +185,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Toast.makeText(AddActivity.this, "Cancella la vecchia prima", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddActivity.this, "Cancella prima la vecchia prenotazione", Toast.LENGTH_LONG).show();
 
                     } else {
                         notebookRef.add(new Prenotazione(citta, negozio, ora, minuti, chosenDate, ts));

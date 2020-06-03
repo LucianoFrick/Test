@@ -3,16 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/backgroundPrenotazione"
     android:orientation="vertical"
+    android:background="@drawable/background_recycler"
+
     android:layout_marginTop="15dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textSize="19sp"
         android:textAlignment="center"
         android:id="@+id/text_citta"/>
 
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 <LinearLayout
     android:layout_width="match_parent"
@@ -30,22 +30,22 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/text_ora"
         android:textColor="@android:color/black"
+        android:id="@+id/text_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="textStart"
-        android:textSize="20dp"
-        android:textStyle="italic" />
-
+        android:textSize="18dp"/>
     <TextView
+        android:id="@+id/text_ora"
         android:textColor="@android:color/black"
-        android:id="@+id/text_data"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAlignment="textEnd"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:textStyle="bold" />
+
+
 </LinearLayout>
 
 
