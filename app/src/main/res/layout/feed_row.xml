@@ -20,6 +20,8 @@
         android:id="@+id/text_negozio"
         android:textColor="@android:color/black"
         android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="22sp"
