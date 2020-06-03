@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                                         SharedPreferences.Editor editor = preferences.edit();
                                         editor.putBoolean("firstrun",false);
                                         editor.apply();
-                                        finish(); //cosi se uno stronzo clicca il pulsante indietro non torna più sulla schermata iniziale
+                                        finish(); //cosi seclicca il pulsante indietro non torna più sulla schermata iniziale
                                         startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                                     }
                                     else{

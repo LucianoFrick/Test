@@ -52,8 +52,8 @@ public class FragmentProfilo extends Fragment {
     private ArrayList<String> permissionRejected = new ArrayList<>();
     private ArrayList<String> permissions = new ArrayList<>();
 
-    private final static  int ALL_PERMISSION_RESULT = 107;
-    private final static  int PICK_IMAGE = 200;
+    private final static int ALL_PERMISSION_RESULT = 107;
+    private final static int PICK_IMAGE = 200;
 
     private ImageView propic;
     private EditText textNome;
@@ -66,20 +66,20 @@ public class FragmentProfilo extends Fragment {
     final FirebaseUser currentUser = nAuth.getCurrentUser();
 
     @Override
-    public void onCreate( Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profilo, container, false);
 
-        progressBar= view.findViewById(R.id.progressbar);
-        propic=view.findViewById(R.id.proPic);
+        progressBar = view.findViewById(R.id.progressbar);
+        propic = view.findViewById(R.id.proPic);
         propic.setClipToOutline(true);
-        textNome=view.findViewById(R.id.proName);
+        textNome = view.findViewById(R.id.proName);
         textNome.setText(currentUser.getDisplayName());
-        save=view.findViewById(R.id.save);
+        save = view.findViewById(R.id.save);
 
         loadUserInformation();
 
@@ -96,10 +96,10 @@ public class FragmentProfilo extends Fragment {
                 permissions.add(Manifest.permission.CAMERA);
                 permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-                permissionToRequest=findUnaskedPermissions(permissions);
-                if(permissionToRequest.size() > 0){ //va a richiedere i permessi
+                permissionToRequest = findUnaskedPermissions(permissions);
+                if (permissionToRequest.size() > 0) { //va a richiedere i permessi
                     requestPermissions((String[]) permissionToRequest.toArray(new String[permissionToRequest.size()]), ALL_PERMISSION_RESULT);
-                }else{
+                } else {
                     startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
                 }
             }
@@ -114,7 +114,7 @@ public class FragmentProfilo extends Fragment {
                         .load(currentUser.getPhotoUrl().toString())
                         .centerCrop()
                         .into(propic);
-            }else {
+            } else {
                 Glide.with(this)
                         .load(getActivity().getDrawable(R.drawable.placeholde))
                         .centerCrop()
@@ -128,12 +128,12 @@ public class FragmentProfilo extends Fragment {
 
     private void saveUserInformation() {
         String displayName = textNome.getText().toString();
-        if(displayName.isEmpty()){
+        if (displayName.isEmpty()) {
             textNome.setError("Name required");
             textNome.requestFocus();
             return;
         }
-        if (currentUser != null && profileImageUrl!= null) {
+        if (currentUser != null && profileImageUrl != null) {
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                     .setDisplayName(displayName)
                     .setPhotoUri(Uri.parse(profileImageUrl))
@@ -142,7 +142,7 @@ public class FragmentProfilo extends Fragment {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 Toast.makeText(getActivity(), "Image Updated", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -153,16 +153,16 @@ public class FragmentProfilo extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if(requestCode==PICK_IMAGE){
+        if (requestCode == PICK_IMAGE) {
             Bitmap bitmap = null;
-            if(resultCode == RESULT_OK){
-               if (getPickImageResultUri(intent) != null){ //abbiamo caricato la nostra immagine come bitmap
+            if (resultCode == RESULT_OK) {
+                if (getPickImageResultUri(intent) != null) { //abbiamo caricato la nostra immagine come bitmap
                     //uriProfileImage=intent.getData();
                     uriProfileImage = getPickImageResultUri(intent);
-                    try{
-                        bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getContentResolver(),uriProfileImage);
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getContentResolver(), uriProfileImage);
 
-                    }catch(IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else bitmap = (Bitmap) intent.getExtras().get("data");
@@ -173,17 +173,16 @@ public class FragmentProfilo extends Fragment {
                         .into(propic);
                 uploadImageToFirebaseStorage();
             }
-        }
-        else{
-            Log.e("a","a");
+        } else {
+            Log.e("a", "a");
         }
     }
 
 
     private void uploadImageToFirebaseStorage() {
         final StorageReference profileImageReference =
-                FirebaseStorage.getInstance().getReference("profilepics/"+System.currentTimeMillis()+".jpg");
-        if (uriProfileImage != null){
+                FirebaseStorage.getInstance().getReference("profilepics/" + System.currentTimeMillis() + ".jpg");
+        if (uriProfileImage != null) {
             progressBar.setVisibility(View.VISIBLE); //faccio compare la rogressbar
             profileImageReference.putFile(uriProfileImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -217,19 +216,19 @@ public class FragmentProfilo extends Fragment {
 
 
     //solo se ho usato la fotocamera
-    private Uri getPickImageResultUri(Intent data){
+    private Uri getPickImageResultUri(Intent data) {
         boolean isCamera = true;
-        if(data != null){
+        if (data != null) {
             String action = data.getAction();
             isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
         }
         return isCamera ? getCaptureImageOutputUrl() : data.getData(); // se true prime, se false secondo
     }
 
-    private ArrayList findUnaskedPermissions(ArrayList<String> wanted){ //troviamo quali permessi non abbiamo chiesto
+    private ArrayList findUnaskedPermissions(ArrayList<String> wanted) { //troviamo quali permessi non abbiamo chiesto
         ArrayList<String> result = new ArrayList<>();
-        for(String perm : wanted){
-            if(!(getActivity().checkSelfPermission(perm) == PackageManager.PERMISSION_GRANTED)){
+        for (String perm : wanted) {
+            if (!(getActivity().checkSelfPermission(perm) == PackageManager.PERMISSION_GRANTED)) {
                 result.add(perm); //per ogni permesso necessario non è stato dato allora lo dobbiamo richiedere
             }
         }
@@ -237,15 +236,15 @@ public class FragmentProfilo extends Fragment {
     }
 
     //funzione per far scegliere all'utente l'intent da dove vuole prendere la foto
-    public Intent getPickImageChooserIntent(){
+    public Intent getPickImageChooserIntent() {
         Uri outputFileUri = getCaptureImageOutputUrl();
         List<Intent> allIntents = new ArrayList<>();
         PackageManager packageManager = getActivity().getPackageManager();
 
         //PRIMO INTENT - fotocamera
         Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        List <ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0); //lista delle app per fare foto
-        for(ResolveInfo res : listCam) {
+        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0); //lista delle app per fare foto
+        for (ResolveInfo res : listCam) {
             Intent intent = new Intent(captureIntent);
             intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
             intent.setPackage(res.activityInfo.packageName);
@@ -257,8 +256,8 @@ public class FragmentProfilo extends Fragment {
 
         //SECONDO INTENT - galleria
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        List <ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0); //lista delle app come galleria
-        for(ResolveInfo res : listGallery) {
+        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0); //lista delle app come galleria
+        for (ResolveInfo res : listGallery) {
             Intent intent = new Intent(galleryIntent);
             intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
             intent.setPackage(res.activityInfo.packageName);
@@ -266,9 +265,9 @@ public class FragmentProfilo extends Fragment {
         }
 
         //vogliamo togliere l'intent dei documenti, for che rimuove se lo trova l'intent dell'applicazione dei documenti
-        Intent mainIntent = allIntents.get(allIntents.size()-1);
-        for(Intent intent : allIntents){
-            if(intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity")) {
+        Intent mainIntent = allIntents.get(allIntents.size() - 1);
+        for (Intent intent : allIntents) {
+            if (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity")) {
                 mainIntent = intent;
                 break;
             }
@@ -276,38 +275,18 @@ public class FragmentProfilo extends Fragment {
         allIntents.remove(mainIntent);
 
         Intent chooserIntent = Intent.createChooser(mainIntent, getString(R.string.selsorgente));
-        //ora gli aggiungiamo tutti gli altri intent, abbiamo preso il principale che abbiamo scelto (se esiste è l'intent dei documenti altrimenti è l'ultimo) ci creiamo
-        // un intent da questo e andiamo ad inserire tutti gli altri intent dopo abbiamo tolto tutti gli altri intent dalla lista degli intent
+
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
 
         return chooserIntent;
     }
 
-    public Uri getCaptureImageOutputUrl(){
+    public Uri getCaptureImageOutputUrl() {
         Uri outputFileUri = null;
-        File getImage =getActivity().getExternalCacheDir();
-        if(getImage != null)
-            outputFileUri = Uri.fromFile(new File(getImage.getPath(),  currentUser.getUid() + "propic.png"));
+        File getImage = getActivity().getExternalCacheDir();
+        if (getImage != null)
+            outputFileUri = Uri.fromFile(new File(getImage.getPath(), currentUser.getUid() + "propic.png"));
         return outputFileUri;
     }
 
-
-    //metodo chiamato quando l'utente ha finito di dare i permessi
-    public void onRequestPermissionToResult(int requestCode, String[] permission, int []grantResults) {
-        if (requestCode == ALL_PERMISSION_RESULT) {
-            for (Object perms : permissionToRequest) {
-                if (!(Objects.requireNonNull(getActivity()).checkSelfPermission((String) perms) == PackageManager.PERMISSION_GRANTED)) {
-                    permissionRejected.add((String) perms);
-                }
-            }
-            if(permissionRejected.size() > 0){
-
-                if(shouldShowRequestPermissionRationale(permissionRejected.get(0))){
-                    Toast.makeText(getContext(), "Dovresti Approvare tutto", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE);
-            }
-        }
-    }
 }

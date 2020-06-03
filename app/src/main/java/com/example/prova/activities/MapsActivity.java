@@ -70,7 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         markers = new ArrayList<>();
         switch(citta){
-            case "CupraMontana": //SCELTA DI MERDA
+            case "CupraMontana":
                 LatLng SiCamilletti = new LatLng(43.457222, 13.107696);
                 LatLng AlimentariMauro = new LatLng(43.448703, 13.120636);
                 LatLng CoalCu = new LatLng(43.445378, 13.113300);

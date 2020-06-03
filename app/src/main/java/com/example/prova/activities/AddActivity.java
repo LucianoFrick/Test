@@ -78,7 +78,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
        hourSpinner.setAdapter(adapter4);
        minuteSpinner.setAdapter(adapter5);
 
-       citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {//popolazione marketSpinner in base alla scelta della città
            @Override
            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                String cityValue = citySpinner.getSelectedItem().toString();
@@ -111,7 +111,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
         btnMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddActivity.this, MapsActivity.class);
+                Intent intent = new Intent(AddActivity.this, MapsActivity.class);//coordinate per visualizzazione mappa
 
                 String cityValue = citySpinner.getSelectedItem().toString();
                 switch(cityValue){
@@ -212,7 +212,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
             Toast.makeText(AddActivity.this, "Inserisci data", Toast.LENGTH_LONG).show();
             return;
         }
-        //creo una variabile calendario con le scelte fatte
+        //aggiungo al calendario ora e minuti
         c.set(Calendar.HOUR, ora);
         c.set(Calendar.MINUTE, minuti);
         c.set(Calendar.SECOND, 0);
@@ -227,9 +227,9 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments(); //creo una lista con ogni document otrovato con quel ts
+                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments(); //creo una lista con ogni documento trovato con quel ts
                 for(DocumentSnapshot snapshot : list){ //per ogni documento della lista incremento contatore di uno
-                    count[0] += 1;//se trovo aumento di 1
+                    count[0] += 1;
                 }
 
                 if(count[0]<=5) {

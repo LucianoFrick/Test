@@ -109,9 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
         nAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
                 if(task.isSuccessful()){
-
                     final FirebaseUser user = nAuth.getCurrentUser();
                     UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                             .setDisplayName(nome + " " + cognome).build();
