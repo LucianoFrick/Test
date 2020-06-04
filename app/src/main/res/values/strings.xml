@@ -21,6 +21,7 @@
     <string name="orario">Orario di arrivo:</string>
     <string name="durata">Durata:</string>
     <string name="scegli_data">Scegli la data</string>
+    <string name="cancellazioneEseguita">Cancellazione Eseguita</string>
 
     <string-array name="cities">
         <item>Camerano</item>

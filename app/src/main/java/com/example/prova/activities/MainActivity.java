@@ -1,24 +1,27 @@
 package com.example.prova.activities;
 
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.os.Bundle;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import androidx.annotation.NonNull;
-        import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-        import com.example.prova.R;
-        import com.google.android.gms.tasks.OnCompleteListener;
-        import com.google.android.gms.tasks.Task;
-        import com.google.firebase.auth.AuthResult;
-        import com.google.firebase.auth.FirebaseAuth;
+import com.example.prova.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnLogin, btnRegister;
+    private TextView txtReset;
     private EditText emailSU, passwordSU;
     FirebaseAuth firebaseAuth;
 
@@ -30,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
         emailSU=findViewById(R.id.emailLogin);
         passwordSU=findViewById(R.id.passwordLogin);
         btnLogin=findViewById(R.id.btnLogin);
+        txtReset=findViewById(R.id.text_reset);
         btnRegister=findViewById(R.id.btnRegister);
+
+
+
         firebaseAuth =FirebaseAuth.getInstance();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +76,47 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        txtReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //final ProgressDialog progressDialog = new ProgressDialog(ForgotPasswordActivity.this);
+                //progressDialog.setMessage("verifying..");
+                //progressDialog.show();
+
+                final String email = emailSU.getText().toString().trim();
+                if (email.isEmpty()) {
+                    emailSU.setError("Email required");
+                    emailSU.requestFocus();
+                    return;
+                }
+
+                firebaseAuth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                   // progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "Reset password instructions has sent to your email",
+                                            Toast.LENGTH_SHORT).show();
+                                }else{
+                                    //progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(),
+                                            "Email don't exist", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+
         SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
 
         if(preferences.getBoolean("firstrun", true)) {

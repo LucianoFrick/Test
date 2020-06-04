@@ -26,8 +26,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
-
 public class FragmentPrenotazioni extends Fragment {
 
     FirebaseAuth nAuth = FirebaseAuth.getInstance();
@@ -73,6 +71,7 @@ public class FragmentPrenotazioni extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 adapter.deleteItem(viewHolder.getAdapterPosition());
+                Toast.makeText(getActivity(),getString(R.string.cancellazioneEseguita), Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
 

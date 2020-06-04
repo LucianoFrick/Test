@@ -30,9 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnRegistra, btnAlready;
     private FirebaseAuth nAuth;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

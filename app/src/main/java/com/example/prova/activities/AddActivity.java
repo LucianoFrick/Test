@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -25,17 +24,14 @@ import com.example.prova.fragments.DatePickerFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.WriteBatch;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -59,7 +55,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
        final Spinner hourSpinner = findViewById(R.id.spinner_hour);
        final Spinner minuteSpinner = findViewById(R.id.spinner_minutes);
        final TextView dateText = findViewById(R.id.text_data);
-       countText=findViewById(R.id.text_count);
+        countText=findViewById(R.id.text_count);
 
        final ArrayAdapter<CharSequence> adapter = ArrayAdapter
                .createFromResource(this, R.array.cities, android.R.layout.simple_spinner_item);
@@ -221,8 +217,11 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
 
 
 
-        FirebaseFirestore.getInstance().collection("Supermercati").document(marketSpinner.getSelectedItem().toString()).
-                collection("Prenotazioni").whereEqualTo("ts", ts).get()
+        FirebaseFirestore.getInstance()
+                .collection("Supermercati")
+                .document(marketSpinner.getSelectedItem().toString())
+                .collection("Prenotazioni")
+                .whereEqualTo("ts", ts).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() { // vado nel percorso di firebase del upermercato che ho scelto e guardo se ci sono documenti con il mio stesso timestamp
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

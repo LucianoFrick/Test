@@ -87,20 +87,36 @@
             app:layout_constraintEnd_toEndOf="@+id/passwordLogin"
             app:layout_constraintTop_toBottomOf="@+id/passwordLogin" />
 
+        <TextView
+            android:id="@+id/text_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:clickable="true"
+            android:text="Dimenticato la password?"
+            android:textColor="@android:color/black"
+            android:textSize="18dp"
+            android:textStyle="italic"
+            android:contextClickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordLogin" />
+
         <Button
-        android:id="@+id/btnRegister"
+            android:id="@+id/btnRegister"
             style="@style/BlueButton"
-            android:background="@drawable/mybuttonimportant"
             android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/gotoregister"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnLogin" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/mybuttonimportant"
+            android:text="@string/gotoregister"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
     </LinearLayout>
 
 </RelativeLayout>

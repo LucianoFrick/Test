@@ -15,7 +15,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -63,11 +62,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng paese = new LatLng(latit, longit); //creo variabile di tipo LatLng e ci metto le informazioni ricevute dall'addActivity
 
-        // Add a marker in paese and move the camera
+        // move the camera at paese
         CameraPosition posizionePaese = new CameraPosition.Builder().target(
                 paese).zoom(13).build();
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(posizionePaese));
 
+        //in base alla città scelta, si caricano sull'arrayList i supermercati della città
         markers = new ArrayList<>();
         switch(citta){
             case "CupraMontana":
@@ -90,6 +90,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
         }
 
+        //per tutti i LatLng nell'arrayList "markers", si aggiunge un marker per ogni supermercato
         for(LatLng i : markers) {
             MarkerOptions marker = new MarkerOptions().position(i);
             googleMap.addMarker(marker);
