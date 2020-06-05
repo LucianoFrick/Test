@@ -1,5 +1,8 @@
 package com.example.prova.entities;
 
+        import java.text.DateFormat;
+        import java.util.Calendar;
+
 public class Prenotazione {
     private String citta;
     private String negozio;
@@ -15,6 +18,9 @@ public class Prenotazione {
         this.minuti=minuti;
         this.data=data;
         this.ts=ts;
+    }
+
+    public Prenotazione() {
     }
 
     public String getCitta() {return citta;}
