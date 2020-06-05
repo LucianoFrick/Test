@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="25dp"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="25dp">
 
     <RelativeLayout
         android:id="@+id/linearLayout"
@@ -39,9 +39,9 @@
         android:id="@+id/proName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text=""
         android:fontFamily="Roboto-italic"
+        android:text=""
+        android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -53,10 +53,10 @@
     <Button
         android:id="@+id/save"
         style="@style/BlueButton"
-        android:background="@drawable/mybuttonimportant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="340dp"
+        android:layout_marginBottom="224dp"
+        android:background="@drawable/mybuttonimportant"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
