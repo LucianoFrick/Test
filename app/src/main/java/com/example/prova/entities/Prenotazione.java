@@ -1,8 +1,5 @@
 package com.example.prova.entities;
 
-        import java.text.DateFormat;
-        import java.util.Calendar;
-
 public class Prenotazione {
     private String citta;
     private String negozio;
@@ -20,16 +17,9 @@ public class Prenotazione {
         this.ts=ts;
     }
 
-    public Prenotazione() {
-    }
-
-    public String getCitta() {
-        return citta;
-    }
+    public String getCitta() {return citta;}
     public String getNegozio() { return negozio; }
-    public int getOra(){
-        return  ora;
-    }
+    public int getOra(){return  ora;}
     public int getMinuti(){ return  minuti; }
     public String getData() { return data; }
     public long getTs() { return ts; }

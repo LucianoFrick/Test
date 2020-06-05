@@ -95,7 +95,6 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("cognome", cognome);
         user.put("email", email);
         user.put("password", password);
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = nAuth.getCurrentUser();
         db.collection("utenti").document(currentUser.getEmail()).collection("Info").document(uid).set(user);

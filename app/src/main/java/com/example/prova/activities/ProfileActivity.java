@@ -24,7 +24,6 @@ public class ProfileActivity extends AppCompatActivity {
     private FragmentProfilo fragmentProfilo;
     private FragmentPrenotazioni fragmentPrenotazioni;
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -71,8 +70,6 @@ public class ProfileActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
 
     }
 }

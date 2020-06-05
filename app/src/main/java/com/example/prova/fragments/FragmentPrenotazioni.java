@@ -50,7 +50,6 @@ public class FragmentPrenotazioni extends Fragment {
         adapter.startListening(); //l'adapter comincia ad aggiornarsi
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,7 +74,6 @@ public class FragmentPrenotazioni extends Fragment {
             }
         }).attachToRecyclerView(recyclerView);
 
-
         btnAdd=view.findViewById(R.id.button_add);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,8 +90,6 @@ public class FragmentPrenotazioni extends Fragment {
                 new FirestoreRecyclerOptions.Builder<Prenotazione>()
                         .setQuery(query, Prenotazione.class).build();
         adapter=new FireAdapter(options);
-
-
     }
 
     @Override

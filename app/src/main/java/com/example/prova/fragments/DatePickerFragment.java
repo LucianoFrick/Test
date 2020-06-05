@@ -15,12 +15,11 @@ import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment {
     @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {  // non lo so bene manco io ho copiato da un indiano, comuqnue crea date picker e funziona quindi bona
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Calendar calendar= Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-
         return new DatePickerDialog(getActivity(), R.style.DatePicker, (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
     }
 }

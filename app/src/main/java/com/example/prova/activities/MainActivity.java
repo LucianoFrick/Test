@@ -81,10 +81,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //final ProgressDialog progressDialog = new ProgressDialog(ForgotPasswordActivity.this);
-                //progressDialog.setMessage("verifying..");
-                //progressDialog.show();
-
                 final String email = emailSU.getText().toString().trim();
                 if (email.isEmpty()) {
                     emailSU.setError("Email required");
@@ -97,11 +93,9 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
-                                   // progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "Reset password instructions has sent to your email",
                                             Toast.LENGTH_SHORT).show();
                                 }else{
-                                    //progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(),
                                             "Email doesn't exist", Toast.LENGTH_SHORT).show();
                                 }
@@ -109,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
